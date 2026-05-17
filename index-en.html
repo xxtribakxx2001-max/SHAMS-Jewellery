@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHAMS — شمس | Luxury Arabic Jewellery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E2C97E;
+      --gold-dark: #8B6914;
+      --cream: #F5EFE0;
+      --cream-dark: #EDE3CC;
+      --black: #0A0A0A;
+      --black-soft: #141414;
+      --grey: #888;
+      --white: #FDFAF4;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; }
+
+    /* ══ SCROLL PROGRESS ══ */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+      z-index: 9999; transition: width .1s linear;
+      box-shadow: 0 0 8px rgba(201,168,76,.6);
+    }
+    /* ══ PAGE LOAD OVERLAY ══ */
+    #page-intro {
+      position: fixed; inset: 0; background: var(--black); z-index: 99999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+      animation: page-intro-out 0.9s cubic-bezier(.77,0,.175,1) 4.5s forwards;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    /* Roses video inside intro */
+    #page-intro .intro-roses-video {
+      position: absolute; inset: 0; z-index: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: .55;
+      filter: saturate(1.4) brightness(1.0);
+    }
+    /* Dark overlay over video so text reads clean */
+    #page-intro .intro-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(10,10,10,.45), rgba(10,10,10,.75));
+    }
+    /* Content above video */
+    #page-intro .intro-content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      text-align: center;
+    }
+    #page-intro .pi-logo {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem,9vw,7rem);
+      font-weight: 600; letter-spacing: .4em; color: var(--gold);
+      animation: pi-fade-in 1.2s ease .4s both;
+      text-shadow: 0 0 60px rgba(201,168,76,.6), 0 0 120px rgba(201,168,76,.2);
+    }
+    #page-intro .pi-line {
+      width: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: pi-line-grow 1.2s ease .8s both;
+    }
+    #page-intro .pi-arabic {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem,2vw,1.3rem);
+      letter-spacing: .6em; color: var(--gold-light); font-weight: 200;
+      animation: pi-fade-in 1s ease 1.2s both;
+    }
+    #page-intro .pi-tagline {
+      font-size: .65rem; letter-spacing: .4em; text-transform: uppercase;
+      color: rgba(245,239,224,.6); font-weight: 200;
+      animation: pi-fade-in 1s ease 1.6s both;
+    }
+    @keyframes pi-fade-in { 0%{opacity:0;transform:translateY(16px)} 100%{opacity:1;transform:translateY(0)} }
+    @keyframes pi-line-grow { 0%{width:0} 100%{width:260px} }
+    @keyframes page-intro-out {
+      0%{opacity:1;transform:scale(1)}
+      100%{opacity:0;transform:scale(1.04)}
+    }
+
+    /* ══ NAV ══ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 3rem;
+      background: linear-gradient(to bottom, rgba(10,10,10,.9), transparent);
+      transition: background .4s;
+    }
+    nav.scrolled { background: rgba(10,10,10,.97); backdrop-filter: blur(10px); }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; letter-spacing: .3em; color: var(--gold); text-decoration: none; }
+    .nav-logo span { font-size: .9rem; display: block; letter-spacing: .5em; color: var(--gold-light); font-weight: 300; margin-top: -4px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--white); text-decoration: none; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; transition: color .3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: .6rem; }
+    .dropdown-menu {
+      display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      background: rgba(10,10,10,.97); border: 1px solid rgba(201,168,76,.3);
+      min-width: 200px; z-index: 200; padding: .8rem 0 .5rem;
+    }
+    .dropdown-menu::before { content: ''; position: absolute; top: -1rem; left: 0; right: 0; height: 1rem; }
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu a { display: block; padding: .6rem 1.4rem; color: var(--grey); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; transition: all .2s; white-space: nowrap; }
+    .dropdown-menu a:hover { color: var(--gold); background: rgba(201,168,76,.05); padding-left: 1.8rem; }
+    .dropdown-menu .drop-divider { height: 1px; background: rgba(201,168,76,.15); margin: .4rem 0; }
+    .nav-cart { position: relative; cursor: pointer; color: var(--white); font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; display: flex; align-items: center; gap: .5rem; border: 1px solid rgba(201,168,76,.3); padding: .5rem 1.2rem; transition: all .3s; }
+    .nav-cart:hover { border-color: var(--gold); color: var(--gold); }
+    .cart-count { background: var(--gold); color: var(--black); width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .6rem; font-weight: 700; }
+
+    /* ══ TICKER ══ */
+    .ticker-wrap { width: 100%; background: var(--black-soft); border-top: 1px solid rgba(201,168,76,.15); border-bottom: 1px solid rgba(201,168,76,.15); overflow: hidden; padding: .7rem 0; position: relative; z-index: 10; }
+    .ticker-track { display: flex; width: max-content; animation: ticker-scroll 30s linear infinite; }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item { font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); padding: 0 2.5rem; white-space: nowrap; }
+    .ticker-item .dot { color: var(--gold-light); margin: 0 .5rem; }
+    @keyframes ticker-scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* ══ HERO ══ */
+    .hero { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,10,10,.25) 0%, rgba(10,10,10,.45) 50%, rgba(10,10,10,.92) 100%); }
+    .hero-content { position: relative; z-index: 2; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+    .hero-arabic {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem,10vw,8rem); font-weight: 300;
+      color: var(--gold); letter-spacing: .1em; line-height: 1;
+      opacity: 0; animation: hero-glow-in 1.8s cubic-bezier(.25,.46,.45,.94) .5s forwards;
+      text-shadow: 0 0 60px rgba(201,168,76,.5), 0 0 120px rgba(201,168,76,.2);
+    }
+    @keyframes hero-glow-in {
+      0%{opacity:0;transform:translateY(20px);filter:blur(8px)}
+      100%{opacity:1;transform:translateY(0);filter:blur(0)}
+    }
+    .hero-line {
+      width: 0; height: 1px; background: linear-gradient(90deg,transparent,var(--gold),transparent);
+      animation: hero-line-draw 1.2s ease 1.8s forwards;
+    }
+    @keyframes hero-line-draw { 0%{width:0} 100%{width:260px} }
+    .hero-tagline { font-size: clamp(.7rem,1.5vw,.9rem); letter-spacing: .5em; text-transform: uppercase; color: var(--cream); font-weight: 200; opacity: 0; animation: hero-slide-up .9s ease 2s forwards; }
+    .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem,2.5vw,1.4rem); font-style: italic; color: var(--gold-light); letter-spacing: .1em; opacity: 0; animation: hero-slide-up .9s ease 2.3s forwards; }
+    @keyframes hero-slide-up { 0%{opacity:0;transform:translateY(18px)} 100%{opacity:1;transform:translateY(0)} }
+    .hero-cta {
+      margin-top: 1rem; border: 1px solid var(--gold); color: var(--gold);
+      padding: .9rem 3rem; text-decoration: none;
+      font-size: .65rem; letter-spacing: .3em; text-transform: uppercase;
+      transition: all .4s; position: relative; overflow: hidden;
+      opacity: 0; animation: hero-slide-up .9s ease 2.6s forwards;
+    }
+    .hero-cta::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+      background: linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent);
+      transition: left .6s ease;
+    }
+    .hero-cta:hover::before { left: 150%; }
+    .hero-cta:hover { background: var(--gold); color: var(--black); }
+    .hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .5rem; font-size: .55rem; letter-spacing: .3em; color: var(--grey); }
+    .hero-scroll::after { content: ''; width: 1px; height: 40px; background: var(--gold); animation: scrollPulse 2s infinite; }
+    @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(.5)} 50%{opacity:1;transform:scaleY(1)} }
+
+    /* ══ DIVIDER ══ */
+    .divider { width: 100%; display: flex; align-items: center; justify-content: center; padding: 2rem 0; gap: 1.5rem; position: relative; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dark)); }
+    .divider::after { background: linear-gradient(to left, transparent, var(--gold-dark)); }
+    .divider-icon { color: var(--gold); font-size: 1.2rem; animation: divider-spin 8s linear infinite; }
+    @keyframes divider-spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+    /* travelling light on divider lines */
+    .divider::before { animation: line-light 3s ease-in-out infinite; }
+    @keyframes line-light { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    /* ══ PROMO SECTIONS ══ */
+    .promo-section { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; overflow: hidden; }
+    .promo-section.reverse { direction: rtl; }
+    .promo-section.reverse > * { direction: ltr; }
+    .promo-img { overflow: hidden; }
+    .promo-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 8s ease; transform: scale(1.05); }
+    .promo-img.revealed img { transform: scale(1); }
+    .promo-content { display: flex; flex-direction: column; justify-content: center; padding: 5rem 6rem; gap: 1.5rem; }
+    .promo-content.dark { background: var(--black-soft); }
+    .promo-content.light { background: var(--cream); color: var(--black); }
+    .promo-eyebrow { font-size: .6rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); clip-path: inset(0 100% 0 0); transition: clip-path .8s cubic-bezier(.77,0,.175,1) .2s; }
+    .promo-eyebrow.revealed { clip-path: inset(0 0% 0 0); }
+    .promo-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,3.5rem); font-weight: 300; line-height: 1.1; opacity: 0; transform: translateY(30px); transition: opacity .9s ease .4s, transform .9s cubic-bezier(.25,.46,.45,.94) .4s; }
+    .promo-title.revealed { opacity: 1; transform: translateY(0); }
+    .promo-title em { font-style: italic; color: var(--gold); }
+    .promo-content.light .promo-title em { color: var(--gold-dark); }
+    .promo-text { font-size: .78rem; line-height: 1.9; color: var(--grey); max-width: 380px; opacity: 0; transform: translateY(20px); transition: opacity .9s ease .6s, transform .9s ease .6s; }
+    .promo-text.revealed { opacity: 1; transform: translateY(0); }
+    .promo-content.light .promo-text { color: #555; }
+    .promo-link { display: inline-block; margin-top: .5rem; color: var(--gold); font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 3px; transition: all .3s; opacity: 0; transition: opacity .9s ease .8s, color .3s; }
+    .promo-link.revealed { opacity: 1; }
+    .promo-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+    /* ══ FILTER TABS ══ */
+    .filter-tabs { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; margin-bottom: 3rem; }
+    .filter-btn { background: transparent; border: 1px solid rgba(201,168,76,.3); color: var(--grey); padding: .55rem 1.4rem; font-family: 'Montserrat', sans-serif; font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: all .3s; text-decoration: none; display: inline-block; }
+    .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .product-card.hidden { display: none; }
+
+    /* ══ CATALOG ══ */
+    .catalog-section { padding: 6rem 3rem; background: var(--black); position: relative; z-index: 1; }
+    .cat-section { margin-bottom: 5rem; }
+    .cat-section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(201,168,76,.0); position: relative; }
+    .cat-section-header::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: linear-gradient(90deg,var(--gold-dark),var(--gold),transparent); transition: width 1.2s cubic-bezier(.77,0,.175,1); }
+    .cat-section-header.line-drawn::after { width: 100%; }
+    .cat-section-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--gold); letter-spacing: .1em; text-transform: uppercase; margin: 0; }
+    .cat-count { font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-header .eyebrow { font-size: .6rem; letter-spacing: .5em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; clip-path: inset(0 100% 0 0); transition: clip-path .8s ease; }
+    .section-header .eyebrow.revealed { clip-path: inset(0 0% 0 0); }
+    .section-header h2 { font-size: clamp(2rem,4vw,3rem); font-weight: 300; color: var(--white); }
+    .section-header h2 em { font-style: italic; color: var(--gold); }
+    .section-header p { color: var(--grey); font-size: .78rem; margin-top: 1rem; letter-spacing: .1em; opacity: 0; transform: translateY(16px); transition: opacity .8s ease .3s, transform .8s ease .3s; }
+    .section-header p.revealed { opacity: 1; transform: translateY(0); }
+    .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.5rem; max-width: 1400px; margin: 0 auto; }
+
+    /* ══ PRODUCT CARDS ══ */
+    .product-card {
+      position: relative; background: var(--black-soft);
+      border: 1px solid rgba(201,168,76,.1);
+      overflow: hidden; cursor: pointer; transition: border-color .4s, transform .4s;
+      opacity: 0; transform: translateY(30px);
+    }
+    .product-card.card-visible { opacity: 1; transform: translateY(0); transition: opacity .7s ease, transform .7s cubic-bezier(.25,.46,.45,.94), border-color .4s; }
+    .product-card:hover { border-color: rgba(201,168,76,.5); transform: translateY(-4px); }
+    .product-img-wrap { position: relative; overflow: hidden; aspect-ratio: 1; background: #1a1a1a; }
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
+    .product-card:hover .product-img-wrap img { transform: scale(1.08); }
+    /* shimmer effect */
+    .product-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(201,168,76,.18) 50%, transparent 60%);
+      transform: translateX(-100%); transition: transform 0s;
+    }
+    .product-card:hover .product-img-wrap::after { transform: translateX(100%); transition: transform .7s ease; }
+    .product-overlay { position: absolute; inset: 0; background: rgba(10,10,10,.55); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 1.5rem; opacity: 0; transition: opacity .4s; }
+    .product-card:hover .product-overlay { opacity: 1; }
+    .add-to-cart-btn { background: var(--gold); color: var(--black); border: none; padding: .8rem 2rem; font-family: 'Montserrat', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: background .3s; transform: translateY(20px); transition: background .3s, transform .4s; }
+    .product-card:hover .add-to-cart-btn { transform: translateY(0); }
+    .add-to-cart-btn:hover { background: var(--gold-light); }
+    .product-info { padding: 1.2rem 1.5rem 1.5rem; }
+    .product-type { font-size: .55rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: .4rem; }
+    .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--white); margin-bottom: .6rem; line-height: 1.3; transition: letter-spacing .3s, transform .3s; }
+    .product-card:hover .product-name { letter-spacing: .02em; transform: translateY(-2px); }
+    .product-price { font-size: .85rem; color: var(--gold-light); font-weight: 300; letter-spacing: .1em; transition: color .3s, text-shadow .3s; }
+    .product-card:hover .product-price { color: var(--gold); text-shadow: 0 0 12px rgba(201,168,76,.5); }
+
+    /* ══ GIFT SECTION ══ */
+    .gift-section { padding: 6rem 3rem; background: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; max-width: 1400px; margin: 0 auto; }
+    .gift-images { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .gift-images img { width: 100%; object-fit: cover; aspect-ratio: 3/4; opacity: 0; transition: opacity .9s ease, transform .9s cubic-bezier(.25,.46,.45,.94); }
+    .gift-images img:nth-child(1) { transform: translateX(-40px); }
+    .gift-images img:nth-child(2) { transform: translateX(40px); }
+    .gift-images img.revealed { opacity: 1; transform: translateX(0) !important; }
+    .gift-content { padding: 3rem; color: var(--black); opacity: 0; transform: translateY(30px); transition: opacity .9s ease .3s, transform .9s ease .3s; }
+    .gift-content.revealed { opacity: 1; transform: translateY(0); }
+    .gift-content .eyebrow { font-size: .6rem; letter-spacing: .5em; color: var(--gold-dark); text-transform: uppercase; margin-bottom: 1rem; }
+    .gift-content h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,3.5vw,3rem); font-weight: 300; margin-bottom: 1.5rem; line-height: 1.2; }
+    .gift-content h2 em { font-style: italic; color: var(--gold-dark); }
+    .gift-content p { font-size: .78rem; line-height: 1.9; color: #555; margin-bottom: 2rem; }
+    .gift-cta { display: inline-block; background: var(--black); color: var(--gold); padding: 1rem 2.5rem; text-decoration: none; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; transition: all .3s; position: relative; overflow: hidden; }
+    .gift-cta::before { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg,transparent,rgba(201,168,76,.2),transparent); transition: left .5s; }
+    .gift-cta:hover::before { left: 150%; }
+    .gift-cta:hover { background: var(--gold-dark); color: var(--white); }
+
+    /* ══ FOOTER ══ */
+    footer { background: var(--black-soft); border-top: 1px solid rgba(201,168,76,.2); padding: 4rem 3rem 2rem; position: relative; z-index: 1; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand .logo { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); letter-spacing: .3em; font-weight: 600; animation: logo-glow 3s ease-in-out infinite; }
+    @keyframes logo-glow { 0%,100%{text-shadow:0 0 20px rgba(201,168,76,.3)} 50%{text-shadow:0 0 40px rgba(201,168,76,.6),0 0 80px rgba(201,168,76,.2)} }
+    .footer-brand .logo-arabic { font-size: .7rem; letter-spacing: .5em; color: var(--gold-light); font-weight: 200; margin-top: -4px; display: block; }
+    .footer-brand p { font-size: .72rem; color: var(--grey); line-height: 1.8; margin-top: 1rem; max-width: 280px; }
+    .footer-col h4 { font-size: .6rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
+    .footer-col ul a { font-size: .72rem; color: var(--grey); text-decoration: none; transition: color .3s; }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(201,168,76,.1); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-bottom p { font-size: .65rem; color: var(--grey); letter-spacing: .1em; }
+
+    /* ══ CART DRAWER ══ */
+    .cart-drawer { position: fixed; right: 0; top: 0; bottom: 0; width: 420px; background: var(--black-soft); border-left: 1px solid rgba(201,168,76,.2); z-index: 1000; transform: translateX(100%); transition: transform .4s ease; display: flex; flex-direction: column; padding: 2rem; overflow-y: auto; }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(201,168,76,.2); }
+    .cart-drawer-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold); }
+    .cart-close { background: none; border: none; color: var(--white); cursor: pointer; font-size: 1.5rem; }
+    .cart-items { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; }
+    .cart-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 1rem; align-items: center; }
+    .cart-item img { width: 80px; height: 80px; object-fit: cover; }
+    .cart-item-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--white); }
+    .cart-item-price { font-size: .75rem; color: var(--gold); margin-top: .3rem; }
+    .cart-item-remove { background: none; border: none; color: var(--grey); cursor: pointer; font-size: 1rem; transition: color .3s; }
+    .cart-item-remove:hover { color: var(--gold); }
+    .cart-empty { text-align: center; color: var(--grey); font-size: .8rem; padding: 3rem 0; }
+    .cart-footer { border-top: 1px solid rgba(201,168,76,.2); padding-top: 1.5rem; margin-top: 1.5rem; }
+    .cart-total { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
+    .cart-total span { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--grey); }
+    .cart-total strong { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); }
+    .checkout-btn { width: 100%; background: var(--gold); color: var(--black); border: none; padding: 1.2rem; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; font-weight: 600; transition: background .3s; }
+    .checkout-btn:hover { background: var(--gold-light); }
+    .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 999; opacity: 0; pointer-events: none; transition: opacity .4s; }
+    .cart-overlay.show { opacity: 1; pointer-events: all; }
+
+    /* ══ TOAST ══ */
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--gold); color: var(--black); padding: .8rem 2rem; font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; z-index: 2000; transition: transform .4s ease; font-weight: 600; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ══ CAMPAIGN SLIDES ══ */
+    #campaign-slides {
+      background: var(--black); padding: 5rem 0 4rem; position: relative; z-index: 1;
+    }
+    .slides-header {
+      text-align: center; margin-bottom: 2.5rem; padding: 0 3rem;
+    }
+    .slides-eyebrow {
+      font-size: .6rem; letter-spacing: .5em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .8rem;
+    }
+    .slides-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem,4vw,3rem); font-weight: 300;
+      color: var(--white); letter-spacing: -.02em;
+    }
+    .slides-title em { font-style: italic; color: var(--gold); }
+    .slides-track-wrap {
+      position: relative; overflow: hidden;
+      max-width: 1400px; margin: 0 auto;
+    }
+    .slides-track {
+      display: flex; transition: transform .7s cubic-bezier(.77,0,.175,1);
+    }
+    .slide-item { min-width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; }
+    .slide-caption {
+      position: absolute; bottom: 2rem; left: 3rem;
+      z-index: 5; pointer-events: none;
+    }
+    .slide-caption .sc-label {
+      font-size: .6rem; letter-spacing: .4em; text-transform: uppercase;
+      color: rgba(212,175,55,.8); font-family: 'Montserrat', sans-serif; font-weight: 300;
+      margin-bottom: .5rem;
+    }
+    .slide-caption .sc-title {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem,2.5vw,2rem);
+      font-weight: 600; color: #f5f0e8; line-height: 1.1;
+    }
+    .slide-caption .sc-title em { font-style: italic; color: #d4af37; }
+    .slide-item video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .slide-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(10,10,10,.6); border: 1px solid rgba(201,168,76,.35);
+      color: var(--gold); font-size: 1.2rem; width: 50px; height: 50px;
+      cursor: pointer; transition: all .3s; backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+    .slide-btn:hover { background: rgba(201,168,76,.15); border-color: var(--gold); }
+    .slide-prev { left: 1.5rem; }
+    .slide-next { right: 1.5rem; }
+    .slides-dots {
+      display: flex; justify-content: center; gap: .8rem; margin-top: 1.5rem;
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(201,168,76,.3); cursor: pointer; transition: all .3s;
+    }
+    .dot.active { background: var(--gold); transform: scale(1.4); }
+
+    /* ══ LANG TOGGLE ══ */
+    #lang-toggle {
+      background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.35);
+      color: var(--gold); font-size: .7rem; font-weight: 700;
+      padding: 6px 14px; border-radius: 6px; cursor: pointer;
+      transition: all .25s; letter-spacing: .1em;
+      font-family: 'Montserrat', sans-serif;
+    }
+    #lang-toggle:hover { background: rgba(201,168,76,.22); border-color: var(--gold); color: var(--white); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .promo-section { grid-template-columns: 1fr; }
+      .promo-section.reverse { direction: ltr; }
+      .gift-section { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .cart-drawer { width: 100%; }
+      .catalog-grid { grid-template-columns: repeat(2,1fr); gap: .8rem; }
+    }
+    @media (max-width: 480px) {
+      .catalog-grid { grid-template-columns: repeat(2,1fr); gap: .5rem; }
+      .catalog-section { padding: 4rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="scroll-progress"></div>
+
+<!-- PAGE INTRO — Roses video + SHAMS logo -->
+<div id="page-intro">
+  <video class="intro-roses-video" autoplay muted loop playsinline>
+    <source src="assets/roses_bg.mp4" type="video/mp4" />
+  </video>
+  <div class="intro-overlay"></div>
+  <div class="intro-content">
+    <div class="pi-logo">SHAMS</div>
+    <div class="pi-line"></div>
+    <div class="pi-arabic">شمس — Luxury Arabic Jewellery</div>
+    <div class="pi-tagline">London · Arabic Craftsmanship · 18k Gold</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">SHAMS <span data-i18n="nav.tagline">شمس — Luxury Arabic Jewellery</span></a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="#coleccion" data-i18n="nav.collection">Collection</a>
+      <div class="dropdown-menu" id="catDropdown">
+        <a href="#cat-anillos" onclick="closeDropdown()" data-i18n="cat.rings">💍 Rings</a>
+        <a href="#cat-brazaletes" onclick="closeDropdown()" data-i18n="cat.bracelets">✦ Bracelets</a>
+        <a href="#cat-pendientes" onclick="closeDropdown()" data-i18n="cat.earrings">◈ Earrings</a>
+        <a href="#cat-perla" onclick="closeDropdown()" data-i18n="cat.pearl">🤍 Pearl Earrings</a>
+        <a href="#cat-colgantes" onclick="closeDropdown()" data-i18n="cat.pendants">⬇ Pendants</a>
+        <a href="#cat-pulseras" onclick="closeDropdown()" data-i18n="cat.bangles">◯ Bangles</a>
+        <div class="drop-divider"></div>
+        <a href="#cat-juegos" onclick="closeDropdown()" data-i18n="cat.sets">✦ Sets</a>
+      </div>
+    </li>
+    <li><a href="#nosotros" data-i18n="nav.about">About</a></li>
+    <li><a href="#regalo" data-i18n="nav.gifts">Gifts</a></li>
+    <li><a href="#contacto" data-i18n="nav.contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <button id="lang-toggle" onclick="window.location.href='index.html'">ES</button>
+    <div class="nav-cart" onclick="toggleCart()">
+      <span data-i18n="nav.cart">Cart</span>
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="assets/woman_loop.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-arabic">شمس</div>
+    <div class="hero-line"></div>
+    <div class="hero-tagline" data-i18n="hero.tagline">London · Arabic Luxury Jewellery</div>
+    <div class="hero-sub" data-i18n="hero.sub">«Where every piece is born from the sun»</div>
+    <a href="#coleccion" class="hero-cta" data-i18n="hero.cta">Discover the Collection</a>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">✦ NEW COLLECTION</span>
+    <span class="ticker-item">· 18K GOLD</span>
+    <span class="ticker-item">· ARABIC CRAFTSMANSHIP</span>
+    <span class="ticker-item">· MADRID</span>
+    <span class="ticker-item">· LUXURY JEWELLERY</span>
+    <span class="ticker-item">· شمس</span>
+    <span class="ticker-item">· FREE SHIPPING</span>
+    <span class="ticker-item">· MADE WITH LOVE</span>
+    <span class="ticker-item">· UNIQUE PIECES</span>
+    <span class="ticker-item">· ARABIC INSPIRATION</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">✦ NEW COLLECTION</span>
+    <span class="ticker-item">· 18K GOLD</span>
+    <span class="ticker-item">· ARABIC CRAFTSMANSHIP</span>
+    <span class="ticker-item">· MADRID</span>
+    <span class="ticker-item">· LUXURY JEWELLERY</span>
+    <span class="ticker-item">· شمس</span>
+    <span class="ticker-item">· FREE SHIPPING</span>
+    <span class="ticker-item">· MADE WITH LOVE</span>
+    <span class="ticker-item">· UNIQUE PIECES</span>
+    <span class="ticker-item">· ARABIC INSPIRATION</span>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="divider"><span class="divider-icon">✦</span></div>
+
+<!-- PROMO 1 -->
+<section class="promo-section" id="promo1">
+  <div class="promo-img" id="promo-img-1">
+    <img src="assets/promo_img1.png" alt="Colección SHAMS" />
+  </div>
+  <div class="promo-content dark">
+    <p class="promo-eyebrow" data-i18n="promo1.eyebrow">✦ New Collection</p>
+    <h2 class="promo-title" data-i18n-html="promo1.title">The gold that <em>illuminates</em><br>every moment</h2>
+    <p class="promo-text" data-i18n="promo1.text">Each SHAMS jewel is a work of art inspired by the light of the Arabian sun. Designed for the woman who carries her story with elegance and confidence.</p>
+    <a href="#coleccion" class="promo-link" data-i18n="promo1.link">View the collection →</a>
+  </div>
+</section>
+
+<!-- PROMO 2 -->
+<section class="promo-section reverse" id="nosotros">
+  <div class="promo-img" id="promo-img-2">
+    <img src="assets/promo_img2.png" alt="SHAMS Joyería" />
+  </div>
+  <div class="promo-content light">
+    <p class="promo-eyebrow" data-i18n="promo2.eyebrow">✦ Our Philosophy</p>
+    <h2 class="promo-title" data-i18n-html="promo2.title">Arabic craftsmanship,<br><em>Mediterranean soul</em></h2>
+    <p class="promo-text" data-i18n="promo2.text">SHAMS was born in Madrid with the dream of bringing the richness of Arabic jewellery to the heart of Europe. Each piece is a bridge between cultures, crafted to last generations.</p>
+    <a href="#coleccion" class="promo-link" data-i18n="promo2.link">Discover our story →</a>
+  </div>
+</section>
+
+<!-- CAMPAIGN VIDEO SLIDES -->
+<section id="campaign-slides">
+  <div class="slides-header">
+    <p class="slides-eyebrow" data-i18n="slides.eyebrow">✦ Campaña</p>
+    <h2 class="slides-title" data-i18n-html="slides.title">Stories of <em>Gold</em></h2>
+  </div>
+  <div class="slides-track-wrap">
+    <div class="slides-track" id="slidesTrack">
+      <div class="slide-item">
+        <video autoplay muted loop playsinline>
+          <source src="assets/campaign1_en.mp4" type="video/mp4">
+        </video>
+        <div class="slide-caption" id="cap1">
+          <div class="sc-label">✦ New Collection</div>
+          <div class="sc-title">The gold that <em>illuminates</em></div>
+        </div>
+      </div>
+      <div class="slide-item">
+        <video autoplay muted loop playsinline>
+          <source src="assets/campaign2_en.mp4" type="video/mp4">
+        </video>
+        <div class="slide-caption" id="cap2">
+          <div class="sc-label">✦ The Perfect Gift</div>
+          <div class="sc-title">A gift she <em>will never forget</em></div>
+        </div>
+      </div>
+      <div class="slide-item">
+        <video autoplay muted loop playsinline>
+          <source src="assets/campaign3_en.mp4" type="video/mp4">
+        </video>
+        <div class="slide-caption" id="cap3">
+          <div class="sc-label">✦ Special Collection</div>
+          <div class="sc-title">Beauty that <em>transcends</em></div>
+        </div>
+      </div>
+    </div>
+    <button class="slide-btn slide-prev" onclick="slideMove(-1)">&#8592;</button>
+    <button class="slide-btn slide-next" onclick="slideMove(1)">&#8594;</button>
+  </div>
+  <div class="slides-dots" id="slidesDots">
+    <span class="dot active" onclick="slideTo(0)"></span>
+    <span class="dot" onclick="slideTo(1)"></span>
+    <span class="dot" onclick="slideTo(2)"></span>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section class="catalog-section" id="coleccion">
+    <div class="section-header">
+      <p class="eyebrow" data-i18n="catalog.eyebrow">✦ Full Collection</p>
+      <h2 data-i18n-html="catalog.title">Jewels that <em>tell stories</em></h2>
+      <p data-i18n="catalog.sub">75 unique pieces of Arabic inspiration — 18k gold, for the woman who shines</p>
+    </div>
+  <div class="filter-tabs" id="filterTabs">
+    <a class="filter-btn" href="#cat-anillos">Rings</a>
+    <a class="filter-btn" href="#cat-brazaletes">Bracelets</a>
+    <a class="filter-btn" href="#cat-pendientes">Earrings</a>
+    <a class="filter-btn" href="#cat-perla">Pearl Earrings</a>
+    <a class="filter-btn" href="#cat-colgantes">Pendants</a>
+    <a class="filter-btn" href="#cat-pulseras">Bangles</a>
+    <a class="filter-btn" href="#cat-juegos">Sets</a>
+  </div>
+  <div id="catalogSections"></div>
+</section>
+
+<!-- DIVIDER -->
+<div style="background:var(--cream)">
+  <div class="divider" style="padding:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent)"></div>
+</div>
+
+<!-- GIFT SECTION -->
+<section id="regalo" style="background:var(--cream);padding:6rem 3rem;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+    <div class="gift-images" id="gift-images">
+      <img src="assets/gift_img3.png" alt="SHAMS Gift" />
+      <img src="assets/gift_img4.png" alt="SHAMS Box" style="margin-top:2rem;" />
+    </div>
+    <div class="gift-content" id="gift-content">
+        <p style="font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:1rem;" data-i18n="gift.eyebrow">✦ El Regalo Perfecto</p>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.2;margin-bottom:1.5rem;" data-i18n-html="gift.title">A gift she<br><em style="font-style:italic;color:var(--gold-dark);">will never forget</em></h2>
+        <p style="font-size:.78rem;line-height:1.9;color:#555;margin-bottom:2rem;" data-i18n="gift.text">Every SHAMS jewel arrives in its black box with a golden ribbon, ready to give. Because the most special moments deserve the most beautiful of details.</p>
+        <a href="#coleccion" class="gift-cta" data-i18n="gift.cta">Choose my gift →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contacto">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">SHAMS <span class="logo-arabic">شمس — Luxury Arabic Jewellery</span></div>
+        <p data-i18n="footer.brand">Luxury Arabic jewellery with a Mediterranean soul. Every piece is a story, every gold is a dream. Madrid · London.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Collection</h4>
+      <ul>
+        <li><a href="#coleccion">All products</a></li>
+        <li><a href="#cat-anillos">Rings</a></li>
+        <li><a href="#cat-pulseras">Bangles</a></li>
+        <li><a href="#cat-pendientes">Earrings</a></li>
+        <li><a href="#cat-juegos">Sets</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="#nosotros">About SHAMS</a></li>
+        <li><a href="#">Return Policy</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Email</a></li>
+        <li><a href="#">Madrid, Spain</a></li>
+      </ul>
+    </div>
+  </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer.copy">© 2025 SHAMS — شمس. All rights reserved.</p>
+      <p style="color:var(--gold);font-size:.7rem;letter-spacing:.2em;" data-i18n="footer.made">✦ Made with love in London</p>
+    </div>
+</footer>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <h3>My Cart</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">Your cart is empty.<br><span style="color:var(--gold)">Discover our jewels ✦</span></div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span>Total</span>
+      <strong id="cartTotal">0.00€</strong>
+    </div>
+    <button class="checkout-btn">Checkout</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✦ Added to cart</div>
+
+<script>
+// ══ TRANSLATIONS ══
+var LANG = 'en';
+var T = {
+  es: {
+    'nav.tagline':'شمس — Joyería de Lujo','nav.collection':'Colección',
+    'nav.about':'Nosotros','nav.gifts':'Regalos','nav.contact':'Contacto','nav.cart':'Carrito',
+    'cat.rings':'💍 Anillos','cat.bracelets':'✦ Brazaletes','cat.earrings':'◈ Pendientes',
+    'cat.pearl':'🤍 Pendientes de Perla','cat.pendants':'⬇ Colgantes',
+    'cat.bangles':'◯ Pulseras','cat.sets':'✦ Juegos',
+    'hero.tagline':'London · Arabic Luxury Jewellery',
+    'hero.sub':'«Where every piece is born from the sun»','hero.cta':'Descubrir la Colección',
+    'promo1.eyebrow':'✦ Nueva Colección',
+    'promo1.title':'The gold that <em>illuminates</em><br>every moment',
+    'promo1.text':'Each SHAMS jewel is a work of art inspired by the light of the Arabian sun. Designed for the woman who carries her story with elegance and confidence.',
+    'promo1.link':'Ver la colección →',
+    'promo2.eyebrow':'✦ Nuestra Filosofía',
+    'promo2.title':'Arabic craftsmanship,<br><em>Mediterranean soul</em>',
+    'promo2.text':'SHAMS was born in Madrid with the dream of bringing the richness of Arabic jewellery to the heart of Europe. Each piece is a bridge between cultures, crafted to last generations.',
+    'promo2.link':'Conoce nuestra historia →',
+    'slides.eyebrow':'✦ Campaña',
+    'slides.title':'Stories of <em>Gold</em>',
+    'catalog.eyebrow':'✦ Colección Completa',
+    'catalog.title':'Jewels that <em>tell stories</em>',
+    'catalog.sub':'75 unique pieces of Arabic inspiration — 18k gold, for the woman who shines',
+    'gift.eyebrow':'✦ El Regalo Perfecto',
+    'gift.title':'A gift she<br><em style="font-style:italic;color:var(--gold-dark);">will never forget</em>',
+    'gift.text':'Every SHAMS jewel arrives in its black box with a golden ribbon, ready to give. Because the most special moments deserve the most beautiful of details.',
+    'gift.cta':'Elegir mi regalo →',
+    'footer.brand':'Luxury Arabic jewellery with a Mediterranean soul. Every piece is a story, every gold is a dream. Madrid · London.',
+    'footer.copy':'© 2025 SHAMS — شمس. All rights reserved.',
+    'footer.made':'✦ Hecho con amor en Madrid',
+    'lang.btn':'EN'
+  },
+  en: {
+    'nav.tagline':'شمس — Luxury Arabic Jewellery','nav.collection':'Collection',
+    'nav.about':'About','nav.gifts':'Gifts','nav.contact':'Contact','nav.cart':'Cart',
+    'cat.rings':'💍 Rings','cat.bracelets':'✦ Bracelets','cat.earrings':'◈ Earrings',
+    'cat.pearl':'🤍 Pearl Earrings','cat.pendants':'⬇ Pendants',
+    'cat.bangles':'◯ Bangles','cat.sets':'✦ Sets',
+    'hero.tagline':'London · Arabic Luxury Jewellery',
+    'hero.sub':'«Where every piece is born from the sun»','hero.cta':'Discover the Collection',
+    'promo1.eyebrow':'✦ New Collection',
+    'promo1.title':'The gold that <em>illuminates</em><br>every moment',
+    'promo1.text':'Each SHAMS jewel is a work of art inspired by the light of the Arabian sun. Designed for the woman who carries her story with elegance and confidence.',
+    'promo1.link':'View the collection →',
+    'promo2.eyebrow':'✦ Our Philosophy',
+    'promo2.title':'Arabic craftsmanship,<br><em>Mediterranean soul</em>',
+    'promo2.text':'SHAMS was born in Madrid with the dream of bringing the richness of Arabic jewellery to the heart of Europe. Each piece is a bridge between cultures, crafted to last generations.',
+    'promo2.link':'Discover our story →',
+    'slides.eyebrow':'✦ Campaign',
+    'slides.title':'Stories of <em>Gold</em>',
+    'catalog.eyebrow':'✦ Full Collection',
+    'catalog.title':'Jewels that <em>tell stories</em>',
+    'catalog.sub':'75 unique pieces of Arabic inspiration — 18k gold, for the woman who shines',
+    'gift.eyebrow':'✦ The Perfect Gift',
+    'gift.title':'A gift she<br><em style="font-style:italic;color:var(--gold-dark);">will never forget</em>',
+    'gift.text':'Every SHAMS jewel arrives in its black box with a golden ribbon, ready to give. Because the most special moments deserve the most beautiful of details.',
+    'gift.cta':'Choose my gift →',
+    'footer.brand':'Luxury Arabic jewellery with a Mediterranean soul. Every piece is a story, every gold is a dream. London · Madrid.',
+    'footer.copy':'© 2025 SHAMS — شمس. All rights reserved.',
+    'footer.made':'✦ Made with love in London',
+    'lang.btn':'ES'
+  }
+};
+
+const catLabels = {
+  es: { 'cat-anillos':'Anillos', 'cat-brazaletes':'Brazaletes', 'cat-pendientes':'Pendientes', 'cat-perla':'Pendientes de Perla', 'cat-colgantes':'Colgantes', 'cat-pulseras':'Pulseras', 'cat-juegos':'Juegos', 'pieces':'piezas' },
+  en: { 'cat-anillos':'Rings', 'cat-brazaletes':'Bracelets', 'cat-pendientes':'Earrings', 'cat-perla':'Pearl Earrings', 'cat-colgantes':'Pendants', 'cat-pulseras':'Bangles', 'cat-juegos':'Sets', 'pieces':'pieces' }
+};
+const productTypeMap = {
+  es: { 'Anillos':'Anillos','Brazaletes':'Brazaletes','Pendientes':'Pendientes','Pendientes de Perla':'Pendientes de Perla','Colgantes':'Colgantes','Pulseras':'Pulseras','Juego de 3':'Juego de 3','Juego de 4':'Juego de 4' },
+  en: { 'Anillos':'Ring','Brazaletes':'Bracelet','Pendientes':'Earrings','Pendientes de Perla':'Pearl Earrings','Colgantes':'Pendant','Pulseras':'Bangle','Juego de 3':'Set of 3','Juego de 4':'Set of 4' }
+};
+const filterLabels = {
+  es: ['Anillos','Brazaletes','Pendientes','Pendientes de Perla','Colgantes','Pulseras','Juegos'],
+  en: ['Rings','Bracelets','Earrings','Pearl Earrings','Pendants','Bangles','Sets']
+};
+
+const slideCaptions = {
+  es: [
+    { label:'✦ Nueva Colección',    title:'El oro que <em>ilumina</em>' },
+    { label:'✦ El Regalo Perfecto', title:'Un regalo que <em>ella recordará</em>' },
+    { label:'✦ Colección Especial', title:'Belleza que <em>trasciende</em>' }
+  ],
+  en: [
+    { label:'✦ New Collection',     title:'The gold that <em>illuminates</em>' },
+    { label:'✦ The Perfect Gift',   title:'A gift she <em>will never forget</em>' },
+    { label:'✦ Special Collection', title:'Beauty that <em>transcends</em>' }
+  ]
+};
+
+// ══ CATALOG DATA ══
+const products = [
+  { id: 0,  file: "001_edited.jpg",                    type: "Juego de 4",          name: "Arwa — The Most Serene",           price: 39.99 },
+  { id: 1,  file: "004_edited.jpg",                    type: "Pulseras",             name: "Maha — Eyes of the Desert",       price: 11.99 },
+  { id: 2,  file: "005_edited.jpg",                    type: "Brazaletes",           name: "Samira — Companion of Stars",price: 18.99 },
+  { id: 3,  file: "006_edited.jpg",                    type: "Brazaletes",           name: "Dina — Celestial Reward",    price: 18.99 },
+  { id: 4,  file: "012_edited.jpg",                    type: "Juego de 3",           name: "Amal — Shining Hope",     price: 34.99 },
+  { id: 5,  file: "015_edited.jpg",                    type: "Juego de 3",           name: "Shams — Light of the Sun",            price: 34.99 },
+  { id: 6,  file: "016_edited.jpg",                    type: "Juego de 4",           name: "Hadeel — Whisper of Doves",    price: 39.99 },
+  { id: 7,  file: "018_edited.jpg",                    type: "Brazaletes",           name: "Huda — Luminous Guide",           price: 18.99 },
+  { id: 8,  file: "020_edited.jpg",                    type: "Juego de 4",           name: "Rasha — Desert Gazelle",    price: 39.99 },
+  { id: 9,  file: "021_edited.jpg",                    type: "Brazaletes",           name: "Ruba — Peak of Luxury",           price: 18.99 },
+  { id: 10, file: "024_edited.jpg",                    type: "Brazaletes",           name: "Wafa — Shining Fidelity",     price: 18.99 },
+  { id: 11, file: "025_edited.jpg",                    type: "Pulseras",             name: "Abeer — Scent of the Orient",       price: 11.99 },
+  { id: 12, file: "028_edited.jpg",                    type: "Pulseras",             name: "Farah — Boundless Joy",    price: 11.99 },
+  { id: 13, file: "029_edited.jpg",                    type: "Brazaletes",           name: "Nada — Golden Dew",            price: 18.99 },
+  { id: 14, file: "030_edited.jpg",                    type: "Pendientes de Perla",  name: "Leila — Pearl of the Nile",         price: 14.99 },
+  { id: 15, file: "033_edited.jpg",                    type: "Colgantes",            name: "Reem — Golden Gazelle",           price: 17.99 },
+  { id: 16, file: "034_edited.jpg",                    type: "Brazaletes",           name: "Haneen — Golden Nostalgia",      price: 18.99 },
+  { id: 17, file: "036_edited.jpg",                    type: "Brazaletes",           name: "Ghada — Eternal Grace",          price: 18.99 },
+  { id: 18, file: "039_edited.jpg",                    type: "Brazaletes",           name: "Wisam — Medal of Honor",       price: 18.99 },
+  { id: 19, file: "041_edited.jpg",                    type: "Brazaletes",           name: "Rania — Queen of Dawn",     price: 18.99 },
+  { id: 20, file: "042_edited.jpg",                    type: "Pulseras",             name: "Ghalia — The Most Precious",       price: 11.99 },
+  { id: 21, file: "043_edited.jpg",                    type: "Pulseras",             name: "Faten — Pure Fascination",       price: 11.99 },
+  { id: 22, file: "045_edited.jpg",                    type: "Brazaletes",           name: "Sana — Brilliant as the Sun",   price: 18.99 },
+  { id: 23, file: "046_edited.jpg",                    type: "Brazaletes",           name: "Lina — Softness of Dawn",       price: 18.99 },
+  { id: 24, file: "049_edited.jpg",                    type: "Brazaletes",           name: "Basma — Golden Smile",         price: 18.99 },
+  { id: 25, file: "050_edited.jpg",                    type: "Brazaletes",           name: "Dalal — Royal Tenderness",           price: 18.99 },
+  { id: 26, file: "052_edited.jpg",                    type: "Brazaletes",           name: "Nawal — Noble of the Desert",     price: 18.99 },
+  { id: 27, file: "053_edited.jpg",                    type: "Brazaletes",           name: "Suha — Distant Star",         price: 18.99 },
+  { id: 28, file: "054_edited.jpg",                    type: "Pendientes de Perla",  name: "Dalia — Flower of the Nile",          price: 14.99 },
+  { id: 29, file: "055_edited.jpg",                    type: "Pendientes de Perla",  name: "Lujain — Silver and Gold",           price: 14.99 },
+  { id: 30, file: "058_edited.jpg",                    type: "Brazaletes",           name: "Hala — Halo of the Moon",            price: 18.99 },
+  { id: 31, file: "060_edited.jpg",                    type: "Brazaletes",           name: "Lobna — Sweet Love",             price: 18.99 },
+  { id: 32, file: "061_edited.jpg",                    type: "Anillos",              name: "Layla — The Golden Night",        price: 14.99 },
+  { id: 33, file: "065_edited.jpg",                    type: "Brazaletes",           name: "Mira — Vision of Luxury",          price: 18.99 },
+  { id: 34, file: "066_edited.jpg",                    type: "Brazaletes",           name: "Yasmin — Garden of the Orient",     price: 18.99 },
+  { id: 35, file: "067_edited.jpg",                    type: "Brazaletes",           name: "Salma — Golden Peace",             price: 18.99 },
+  { id: 36, file: "069_edited.jpg",                    type: "Brazaletes",           name: "Rawda — Eternal Garden",          price: 18.99 },
+  { id: 37, file: "071_edited.jpg",                    type: "Brazaletes",           name: "Siham — Arrows of Light",         price: 18.99 },
+  { id: 38, file: "074_edited.jpg",                    type: "Brazaletes",           name: "Jumana — Shining Pearl",       price: 18.99 },
+  { id: 39, file: "076_edited.jpg",                    type: "Brazaletes",           name: "Tasnim — Fountain of Paradise",    price: 18.99 },
+  { id: 40, file: "img_084416abdaf7_edited.jpg",       type: "Anillos",              name: "Noor — Eternal Light",              price: 14.99 },
+  { id: 41, file: "img_0abda738b0cf_edited.jpg",       type: "Anillos",              name: "Zain — Supreme Beauty",         price: 14.99 },
+  { id: 42, file: "img_0fa024070613_edited.jpg",       type: "Anillos",              name: "Iman — Golden Faith",               price: 14.99 },
+  { id: 43, file: "img_2dc6d6f89ed1_edited.jpg",       type: "Anillos",              name: "Qamar — Moon of Gold",            price: 14.99 },
+  { id: 44, file: "img_2ecfd7da8b14_edited.jpg",       type: "Pendientes",           name: "Zahra — The Golden Flower",         price: 12.99 },
+  { id: 45, file: "img_309cc0378007_edited.jpg",       type: "Anillos",              name: "Amani — Golden Dreams",         price: 14.99 },
+  { id: 46, file: "img_3ae99d3a7487_edited.jpg",       type: "Colgantes",            name: "Widad — Pure Love",              price: 17.99 },
+  { id: 47, file: "img_406a04244ac1_edited.jpg",       type: "Brazaletes",           name: "Renad — Music of the Soul",        price: 18.99 },
+  { id: 48, file: "img_40752e63e087_edited.jpg",       type: "Pendientes",           name: "Amira — Princess of the East",      price: 12.99 },
+  { id: 49, file: "img_41f7148f22de_edited.jpg",       type: "Pendientes",           name: "Aya — Golden Wonder",         price: 12.99 },
+  { id: 50, file: "img_5089eafe693b_edited.jpg",       type: "Juego de 3",           name: "Najla — Star Eyes",       price: 34.99 },
+  { id: 51, file: "img_526cb4a5f4a5_edited.jpg",       type: "Juego de 3",           name: "Lana — Softness of Silk",        price: 34.99 },
+  { id: 52, file: "img_53e029d82e46_edited.jpg",       type: "Anillos",              name: "Shahd — Golden Honey",            price: 14.99 },
+  { id: 53, file: "img_549dce553761_edited.jpg",       type: "Pendientes",           name: "Thuraya — Golden Constellation",  price: 12.99 },
+  { id: 54, file: "img_5a8fb061bc07_edited.jpg",       type: "Brazaletes",           name: "Zulfa — Golden Lock",          price: 18.99 },
+  { id: 55, file: "img_6b3a23900698_edited.jpg",       type: "Anillos",              name: "Taim — In Love with Gold",       price: 14.99 },
+  { id: 56, file: "img_717767762e9c_edited.jpg",       type: "Pendientes",           name: "Hiba — Celestial Gift",           price: 12.99 },
+  { id: 57, file: "img_7542cc963bec_edited.jpg",       type: "Juego de 4",           name: "Naeema — Eternal Blessing",      price: 39.99 },
+  { id: 58, file: "img_808234da84e1_edited.jpg",       type: "Colgantes",            name: "Aziza — The Most Beloved",         price: 17.99 },
+  { id: 59, file: "img_81bac97e05bc_edited.jpg",       type: "Juego de 3",           name: "Maysoon — Beautiful of Face",      price: 34.99 },
+  { id: 60, file: "img_81f2c26868bc_edited.jpg",       type: "Pendientes",           name: "Rawan — Softness of the Soul",      price: 12.99 },
+  { id: 61, file: "img_8f96f5d42682_edited.jpg",       type: "Brazaletes",           name: "Mais — Walking with Pride",     price: 18.99 },
+  { id: 62, file: "img_93f74965a1e7_edited.jpg",       type: "Pendientes",           name: "Duha — Morning Light",           price: 12.99 },
+  { id: 63, file: "img_9670d9bf0dfe_edited.jpg",       type: "Anillos",              name: "Marwa — Sacred Hill",         price: 14.99 },
+  { id: 64, file: "img_9ff979bf78af_edited.jpg",       type: "Colgantes",            name: "Sabah — Light of Dawn",           price: 17.99 },
+  { id: 65, file: "img_a319a76a60d0_edited.jpg",       type: "Anillos",              name: "Afnan — Eternal Fragrance",       price: 14.99 },
+  { id: 66, file: "img_a6bc79af3947_edited.jpg",       type: "Pendientes",           name: "Shahed — Witness of Love",      price: 12.99 },
+  { id: 67, file: "img_abde2ebd8eeb_edited.jpg",       type: "Anillos",              name: "Hana — Eternal Happiness",        price: 14.99 },
+  { id: 68, file: "img_ac12f5a007d2_edited.jpg",       type: "Anillos",              name: "Nadia — Hope of Dew",     price: 14.99 },
+  { id: 69, file: "img_adb813a15627_edited.jpg",       type: "Colgantes",            name: "Aseel — Honey of Dawn",      price: 17.99 },
+  { id: 70, file: "img_c724be4027e2_edited.jpg",       type: "Brazaletes",           name: "Manar — Beacon of Light",            price: 18.99 },
+  { id: 71, file: "img_d81396dd63f2_edited.jpg",       type: "Colgantes",            name: "Hoor — Virgin of Paradise",      price: 17.99 },
+  { id: 72, file: "img_db9f41eb2b0d_edited.jpg",       type: "Pendientes",           name: "Ruba — Shining Peak",          price: 12.99 },
+  { id: 73, file: "img_eea4857b4ddb_edited.jpg",       type: "Brazaletes",           name: "Zeinab — Ornament of the Soul",       price: 18.99 },
+  { id: 74, file: "img_fab0d6f4c4a1_edited.jpg",       type: "Colgantes",            name: "Rima — Poetry of Gold",           price: 17.99 },
+];
+
+const categories = [
+  { id: 'cat-anillos',    types: ['anillos'] },
+  { id: 'cat-brazaletes', types: ['brazaletes'] },
+  { id: 'cat-pendientes', types: ['pendientes'] },
+  { id: 'cat-perla',      types: ['pendientes de perla'] },
+  { id: 'cat-colgantes',  types: ['colgantes'] },
+  { id: 'cat-pulseras',   types: ['pulseras','pulseras con cierre'] },
+  { id: 'cat-juegos',     types: ['juego de 3','juego de 4'] },
+];
+
+function renderCatalog(lang) {
+  const labels = catLabels[lang];
+  const typeMap = productTypeMap[lang];
+  const sections = document.getElementById('catalogSections');
+  sections.innerHTML = '';
+  // Filter tabs
+  const tabs = document.getElementById('filterTabs');
+  tabs.innerHTML = '';
+  categories.forEach((cat, i) => {
+    const fl = filterLabels[lang][i];
+    tabs.innerHTML += `<a class="filter-btn" href="#${cat.id}">${fl}</a>`;
+  });
+  categories.forEach(cat => {
+    const items = products.filter(p => cat.types.includes(p.type.toLowerCase().trim()));
+    if (!items.length) return;
+    const label = labels[cat.id] || cat.id;
+    const piecesWord = labels['pieces'];
+    const cardsHtml = items.map(p => `
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="assets/catalog/${p.file}" alt="${p.name}" loading="lazy" />
+          <div class="product-overlay">
+            <button class="add-to-cart-btn" onclick="addToCart(${p.id})">✦ ${lang==='es'?'Añadir al Carrito':'Add to Cart'}</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-type">${typeMap[p.type]||p.type}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-price">${p.price.toFixed(2).replace('.',',')}€</div>
+        </div>
+      </div>`).join('');
+    sections.innerHTML += `
+      <div class="cat-section" id="${cat.id}">
+        <div class="cat-section-header">
+          <h3>${label}</h3>
+          <span class="cat-count">${items.length} ${piecesWord}</span>
+        </div>
+        <div class="catalog-grid">${cardsHtml}</div>
+      </div>`;
+  });
+  // Re-observe new cards (safe check for cardObs)
+  if(typeof cardObs !== 'undefined') {
+    document.querySelectorAll('.catalog-grid').forEach(g => cardObs.observe(g));
+  }
+}
+
+renderCatalog('en');
+
+// ══ CART ══
+let cart = [];
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  const existing = cart.find(c => c.id === id);
+  if (existing) existing.qty += 1;
+  else cart.push({ ...product, qty: 1 });
+  updateCartUI();
+  showToast('✦ ' + product.name.split('—')[0].trim() + ' added');
+}
+function removeFromCart(id) { cart = cart.filter(c => c.id !== id); updateCartUI(); }
+function updateCartUI() {
+  document.getElementById('cartCount').textContent = cart.reduce((s,c)=>s+c.qty,0);
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  if (!cart.length) {
+    itemsEl.innerHTML = `<div class="cart-empty">Your cart is empty.<br><span style="color:var(--gold)">Discover our jewels ✦</span></div>`;
+    footerEl.style.display = 'none';
+  } else {
+    itemsEl.innerHTML = cart.map(c=>`
+      <div class="cart-item">
+        <img src="assets/catalog/${c.file}" alt="${c.name}" />
+        <div><div class="cart-item-name">${c.name}</div><div class="cart-item-price">${c.price.toFixed(2).replace('.',',')}€ × ${c.qty}</div></div>
+        <button class="cart-item-remove" onclick="removeFromCart(${c.id})">✕</button>
+      </div>`).join('');
+    footerEl.style.display = 'block';
+    document.getElementById('cartTotal').textContent = cart.reduce((s,c)=>s+c.price*c.qty,0).toFixed(2).replace('.',',')+'€';
+  }
+}
+function toggleCart() {
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('show');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ══ NAV SCROLL ══
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  // scroll progress
+  const h = document.documentElement;
+  const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('scroll-progress').style.width = pct + '%';
+});
+
+// ══ DROPDOWN ══
+function closeDropdown() { document.getElementById('catDropdown').classList.remove('open'); }
+document.addEventListener('click', e => { if (!e.target.closest('.nav-dropdown')) closeDropdown(); });
+
+function applyLang(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-html');
+    if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+  });
+  document.getElementById('lang-toggle').textContent = T[lang]['lang.btn'];
+  document.documentElement.lang = lang;
+}
+
+function toggleLang() {
+  LANG = LANG === 'es' ? 'en' : 'es';
+  applyLang(LANG);
+  renderCatalog(LANG);
+  renderSlidesCaptions(LANG);
+}
+
+function renderSlidesCaptions(lang) {
+  [1,2,3].forEach(i => {
+    const cap = document.getElementById('cap'+i);
+    if (!cap) return;
+    const c = slideCaptions[lang][i-1];
+    cap.querySelector('.sc-label').textContent = c.label;
+    cap.querySelector('.sc-title').innerHTML = c.title;
+  });
+}
+
+// ══ CAMPAIGN SLIDES ══
+var currentSlide = 0;
+var totalSlides = 3;
+function slideTo(n) {
+  currentSlide = (n + totalSlides) % totalSlides;
+  document.getElementById('slidesTrack').style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+  document.querySelectorAll('.dot').forEach(function(d,i){ d.classList.toggle('active', i===currentSlide); });
+}
+function slideMove(dir) { slideTo(currentSlide + dir); }
+// Auto-advance every 22s
+setInterval(function(){ slideMove(1); }, 22000);
+
+// ══ SCROLL ANIMATIONS ══
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+
+    // Promo images
+    if (el.classList.contains('promo-img')) { el.classList.add('revealed'); observer.unobserve(el); }
+    // Promo text elements
+    if (el.classList.contains('promo-eyebrow') || el.classList.contains('promo-title') ||
+        el.classList.contains('promo-text') || el.classList.contains('promo-link')) {
+      el.classList.add('revealed'); observer.unobserve(el);
+    }
+    // Section eyebrow
+    if (el.classList.contains('eyebrow')) { el.classList.add('revealed'); observer.unobserve(el); }
+    // Section sub p
+    if (el.tagName==='P' && el.parentElement.classList.contains('section-header')) { el.classList.add('revealed'); observer.unobserve(el); }
+    // Cat section headers
+    if (el.classList.contains('cat-section-header')) { el.classList.add('line-drawn'); observer.unobserve(el); }
+    // Gift
+    if (el.id==='gift-content') { el.classList.add('revealed'); observer.unobserve(el); }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.promo-img,.promo-eyebrow,.promo-title,.promo-text,.promo-link,.eyebrow,.cat-section-header,#gift-content').forEach(el=>observer.observe(el));
+document.querySelectorAll('.section-header p').forEach(el=>observer.observe(el));
+
+// Gift images
+const giftImgObs = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      document.querySelectorAll('#gift-images img').forEach((img,i)=>{
+        setTimeout(()=>img.classList.add('revealed'),i*200);
+      });
+      giftImgObs.disconnect();
+    }
+  });
+},{threshold:0.2});
+const gi = document.getElementById('gift-images');
+if(gi) giftImgObs.observe(gi);
+
+// Product cards staggered
+var cardObs = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const cards = entry.target.querySelectorAll('.product-card');
+      cards.forEach((card,i)=>setTimeout(()=>card.classList.add('card-visible'), i*60));
+      cardObs.unobserve(entry.target);
+    }
+  });
+},{threshold:0.05});
+document.querySelectorAll('.catalog-grid').forEach(g=>cardObs.observe(g));
+
+// Page intro dismiss
+setTimeout(()=>{ const pi=document.getElementById('page-intro'); if(pi) { pi.addEventListener('animationend',()=>pi.style.display='none'); } }, 4500);
+</script>
+</body>
+</html>
