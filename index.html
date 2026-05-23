@@ -1123,17 +1123,20 @@ function openProductModal(productId) {
   // Update category
   document.getElementById('modalCategory').textContent = product.type;
   
-  // Update lifestyle photo (if exists)
+  // Update lifestyle photo
   const lifestylePlaceholder = document.getElementById('lifestylePhoto');
   const productName = nameParts[0].trim().toLowerCase();
   const lifestylePath = `assets/lifestyle/${productName}_lifestyle.jpg`;
   
-  // Check if lifestyle photo exists (Amani for now)
-  if (productId === 45) { // Amani
+  // Try to load lifestyle photo, fallback to placeholder if not found
+  const img = new Image();
+  img.onload = function() {
     lifestylePlaceholder.innerHTML = `<img src="${lifestylePath}" alt="${product.name} lifestyle" style="width:100%; height:700px; object-fit:cover; border-radius:8px;">`;
-  } else {
+  };
+  img.onerror = function() {
     lifestylePlaceholder.innerHTML = `<p>📸 FOTO LIFESTYLE<br><br>Modelo usando la joya<br><br><em>(Próximamente)</em></p>`;
-  }
+  };
+  img.src = lifestylePath;
   
   // Show modal
   modal.classList.add('active');
