@@ -1069,8 +1069,8 @@ function renderCatalog(lang) {
     const label = labels[cat.id] || cat.id;
     const piecesWord = labels['pieces'];
     const cardsHtml = items.map(p => `
-      <div class="product-card" data-type="${p.type}">
-        <div class="product-img-wrap" onclick="openProductModal(${p.id})" style="cursor: pointer;">
+      <div class="product-card" data-type="${p.type}" data-product-id="${p.id}">
+        <div class="product-img-wrap">
           <img src="assets/catalog/${p.file}" alt="${p.name}" loading="lazy" />
           <div class="product-overlay">
             <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart(${p.id})">✦ ${lang==='es'?'Añadir al Carrito':'Add to Cart'}</button>
@@ -1143,6 +1143,15 @@ function contactWhatsApp() {
 // Close modal on ESC
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeProductModal();
+});
+
+// Add click event to all product cards (works on mobile)
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.product-card');
+  if (card && !e.target.closest('.add-to-cart-btn')) {
+    const productId = parseInt(card.dataset.productId);
+    if (productId) openProductModal(productId);
+  }
 });
 
 function addToCart(id) {
