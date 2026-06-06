@@ -230,7 +230,7 @@
     .product-card.card-visible { opacity: 1; transform: translateY(0); transition: opacity .7s ease, transform .7s cubic-bezier(.25,.46,.45,.94), border-color .4s; }
     .product-card:hover { border-color: rgba(201,168,76,.5); transform: translateY(-4px); }
     .product-img-wrap { position: relative; overflow: hidden; aspect-ratio: 1; background: #1a1a1a; }
-    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: contain; transition: transform .7s ease; }
     /* Juegos de 3: mostrar completos sin recortar */
     .product-card[data-type="Juego de 3"] .product-img-wrap img { object-fit: contain; }
     .product-card:hover .product-img-wrap img { transform: scale(1.08); }
