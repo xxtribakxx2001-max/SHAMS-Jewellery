@@ -21,6 +21,18 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Montserrat', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
     h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; }
+    
+    /* ══ VIDEO CONTROLS FIX (Hide play button on mobile) ══ */
+    video {
+      pointer-events: none;
+    }
+    video::-webkit-media-controls {
+      display: none !important;
+    }
+    video::-webkit-media-controls-enclosure {
+      display: none !important;
+    }
+
 
     /* ══ SCROLL PROGRESS ══ */
     #scroll-progress {
@@ -1310,6 +1322,19 @@ document.querySelectorAll('.catalog-grid').forEach(g=>cardObs.observe(g));
 
 // Page intro dismiss
 setTimeout(()=>{ const pi=document.getElementById('page-intro'); if(pi) { pi.addEventListener('animationend',()=>pi.style.display='none'); } }, 4500);
+
+// Force autoplay on all videos (fix mobile controls icon)
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('video').forEach(video => {
+    video.muted = true;
+    video.playsInline = true;
+    video.play().catch(() => {
+      // If autoplay blocked, try again on first user interaction
+      document.addEventListener('touchstart', () => video.play(), { once: true });
+    });
+  });
+});
+
 </script>
 
 <!-- PRODUCT MODAL -->
