@@ -451,11 +451,10 @@
   }
 
   .lifestyle-placeholder {
-    text-align: center;
-    padding: 250px 40px;
-    color: var(--gold);
-    font-size: 18px;
-    line-height: 1.6;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: var(--black-soft);
+    border-radius: 8px;
   }
   
   .product-photo-modal {
@@ -1129,7 +1128,7 @@ function openProductModal(productId) {
     lifestylePlaceholder.innerHTML = `<img src="${lifestylePath}" alt="${product.name} lifestyle">`;
   };
   img.onerror = function() {
-    lifestylePlaceholder.innerHTML = `<p>📸 FOTO LIFESTYLE<br><br>Modelo usando la joya<br><br><em>(Próximamente)</em></p>`;
+    lifestylePlaceholder.innerHTML = ``;
   };
   img.src = lifestylePath;
   
@@ -1321,10 +1320,6 @@ setTimeout(()=>{ const pi=document.getElementById('page-intro'); if(pi) { pi.add
     <!-- IZQUIERDA: LIFESTYLE -->
     <div class="lifestyle-photo">
       <div class="lifestyle-placeholder" id="lifestylePhoto">
-        <p>📸 FOTO LIFESTYLE<br><br>
-        Modelo usando la joya<br><br>
-        <em>(Próximamente)</em>
-        </p>
       </div>
     </div>
     
