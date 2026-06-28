@@ -489,21 +489,7 @@
   .product-photo-modal:hover img {
     transform: scale(1.8);
   }
-  .zoom-hint-modal {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    background: rgba(0,0,0,0.7);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    pointer-events: none;
-  }
+
   
   .product-details-modal {
     padding: 20px;
@@ -1147,6 +1133,11 @@ function openProductModal(productId) {
   // Show modal
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+  
+  // Close modal on backdrop click (outside content box)
+  modal.onclick = function(e) {
+    if (e.target === modal) closeProductModal();
+  };
 }
 
 function closeProductModal() {
@@ -1351,7 +1342,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <!-- CENTRO: PRODUCTO -->
     <div class="product-photo-modal">
       <img id="modalProductImage" src="" alt="">
-      <div class="zoom-hint-modal">🔍 Pasa el ratón para ampliar</div>
+
     </div>
     
     <!-- DERECHA: DETALLES -->
