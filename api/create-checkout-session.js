@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         },
         unit_amount: Math.round(item.price * 100), // cents
       },
-      quantity: item.qty,
+      quantity: item.quantity || item.qty || 1,
     }));
 
     // Determine URLs based on deployment
