@@ -1,4 +1,6 @@
-*.DS_Store
 node_modules/
-carrusel.html
-clasificar.html
+.vercel
+.env
+.env.local
+*.log
+.DS_Store

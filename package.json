@@ -1,0 +1,13 @@
+{
+  "name": "shams-jewellery",
+  "version": "1.0.0",
+  "description": "SHAMS — شمس | Luxury Arabic Jewellery E-commerce",
+  "private": true,
+  "dependencies": {
+    "stripe": "^14.0.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.x"
+  }
+}

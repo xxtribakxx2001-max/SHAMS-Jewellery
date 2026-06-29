@@ -854,7 +854,7 @@
       <span>Total</span>
       <strong id="cartTotal">0.00€</strong>
     </div>
-    <button class="checkout-btn">Finalizar Compra</button>
+    <button class="checkout-btn" onclick="handleCheckout()">Finalizar Compra</button>
   </div>
 </div>
 
@@ -1323,10 +1323,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // If autoplay blocked, try again on first user interaction
       document.addEventListener('touchstart', () => video.play(), { once: true });
     });
-  });
-});
-
-</script>
+  });\n});\n\n// ══ STRIPE CHECKOUT ══\nasync function handleCheckout() {\n  if (!cart.length) {\n    showToast('⚠️ Tu carrito está vacío');\n    return;\n  }\n\n  const btn = document.querySelector('.checkout-btn');\n  const originalText = btn.textContent;\n  btn.textContent = 'Procesando...';\n  btn.disabled = true;\n\n  try {\n    // Get base URL from current page\n    const baseUrl = window.location.origin;\n\n    // Build items with full product URLs for Stripe images\n    const items = cart.map(item => ({\n      id: item.id,\n      name: item.name,\n      type: item.type,\n      price: item.price,\n      qty: item.qty,\n      image: `${baseUrl}/assets/catalog/${item.file}`\n    }));\n\n    // Call Vercel Function to create Stripe session\n    const response = await fetch('/api/create-checkout-session', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({\n        items: items,\n        locale: LANG || 'es'\n      })\n    });\n\n    const data = await response.json();\n\n    if (!response.ok) {\n      throw new Error(data.error || 'Error al crear la sesión de pago');\n    }\n\n    // Redirect to Stripe Checkout\n    window.location.href = data.url;\n\n  } catch (error) {\n    console.error('Checkout error:', error);\n    showToast('⚠️ Error al procesar el pago. Inténtalo de nuevo.');\n    btn.textContent = originalText;\n    btn.disabled = false;\n  }\n}\n\n</script>
 
 <!-- PRODUCT MODAL -->
 <div class="product-modal" id="productModal">

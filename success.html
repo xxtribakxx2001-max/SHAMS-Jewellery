@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago Completado — SHAMS شمس</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E2C97E;
+      --gold-dark: #8B6914;
+      --cream: #F5EFE0;
+      --black: #0A0A0A;
+      --white: #FDFAF4;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+    
+    /* Animated background stars */
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      text-align: center;
+      background: rgba(20, 20, 20, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      padding: 4rem 3rem;
+      border-radius: 8px;
+      animation: fadeIn 0.8s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon {
+      font-size: 5rem;
+      margin-bottom: 1.5rem;
+      animation: checkPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s backwards;
+    }
+    
+    @keyframes checkPop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+    
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--cream);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+      letter-spacing: 0.05em;
+    }
+    
+    .order-id {
+      background: rgba(201, 168, 76, 0.1);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      margin: 2rem 0;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-light);
+    }
+    
+    .info-box {
+      background: rgba(10, 10, 10, 0.6);
+      border-left: 3px solid var(--gold);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: left;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    
+    .info-box strong {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: all 0.3s;
+      margin-top: 1.5rem;
+    }
+    
+    .btn:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201, 168, 76, 0.3);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      margin-top: 3rem;
+      font-weight: 600;
+    }
+    
+    .logo-arabic {
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      color: var(--gold-light);
+      font-weight: 200;
+      margin-top: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated stars background -->
+  <div class="stars" id="stars"></div>
+
+  <div class="container">
+    <div class="icon">✓</div>
+    <h1>¡Pago Completado!</h1>
+    <p class="subtitle">
+      Gracias por tu compra. Tu pedido ha sido confirmado<br>
+      y recibirás un email con todos los detalles.
+    </p>
+
+    <div class="order-id" id="orderInfo">
+      <strong>PEDIDO:</strong> <span id="sessionId">Cargando...</span>
+    </div>
+
+    <div class="info-box">
+      <strong>📧 Email de confirmación:</strong> Llegará en los próximos minutos con tu recibo y número de seguimiento.<br><br>
+      <strong>📦 Envío:</strong> Procesaremos tu pedido en 24-48 horas. Todas las joyas SHAMS llegan en su caja negra con lazo dorado.<br><br>
+      <strong>✦ Garantía:</strong> Todas nuestras piezas tienen garantía de calidad. Si tienes alguna pregunta, contáctanos en <strong>contacto@shamsjewellery.com</strong>
+    </div>
+
+    <a href="index.html" class="btn">Volver a la tienda</a>
+
+    <div class="logo">
+      SHAMS
+      <div class="logo-arabic">شمس</div>
+    </div>
+  </div>
+
+  <script>
+    // Generate random stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    // Get session ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session_id');
+    
+    if (sessionId) {
+      document.getElementById('sessionId').textContent = sessionId.slice(0, 24) + '...';
+    } else {
+      document.getElementById('sessionId').textContent = 'No disponible';
+    }
+
+    // Clear cart after successful payment
+    try {
+      localStorage.removeItem('shams-cart');
+    } catch (e) {
+      console.log('Could not clear cart:', e);
+    }
+  </script>
+</body>
+</html>
