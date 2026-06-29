@@ -1089,8 +1089,6 @@ function renderCatalog(lang) {
   }
 }
 
-renderCatalog('es');
-
 // ══ CART ══
 let cart = [];
 // ══ PRODUCT MODAL FUNCTIONS ══
@@ -1316,6 +1314,9 @@ setTimeout(()=>{ const pi=document.getElementById('page-intro'); if(pi) { pi.add
 
 // Force autoplay on all videos (fix mobile controls icon)
 document.addEventListener('DOMContentLoaded', () => {
+  // Render catalog after DOM is ready
+  renderCatalog('es');
+  
   document.querySelectorAll('video').forEach(video => {
     video.muted = true;
     video.playsInline = true;
@@ -1323,7 +1324,61 @@ document.addEventListener('DOMContentLoaded', () => {
       // If autoplay blocked, try again on first user interaction
       document.addEventListener('touchstart', () => video.play(), { once: true });
     });
-  });\n});\n\n// ══ STRIPE CHECKOUT ══\nasync function handleCheckout() {\n  if (!cart.length) {\n    showToast('⚠️ Tu carrito está vacío');\n    return;\n  }\n\n  const btn = document.querySelector('.checkout-btn');\n  const originalText = btn.textContent;\n  btn.textContent = 'Procesando...';\n  btn.disabled = true;\n\n  try {\n    // Get base URL from current page\n    const baseUrl = window.location.origin;\n\n    // Build items with full product URLs for Stripe images\n    const items = cart.map(item => ({\n      id: item.id,\n      name: item.name,\n      type: item.type,\n      price: item.price,\n      qty: item.qty,\n      image: `${baseUrl}/assets/catalog/${item.file}`\n    }));\n\n    // Call Vercel Function to create Stripe session\n    const response = await fetch('/api/create-checkout-session', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({\n        items: items,\n        locale: LANG || 'es'\n      })\n    });\n\n    const data = await response.json();\n\n    if (!response.ok) {\n      throw new Error(data.error || 'Error al crear la sesión de pago');\n    }\n\n    // Redirect to Stripe Checkout\n    window.location.href = data.url;\n\n  } catch (error) {\n    console.error('Checkout error:', error);\n    showToast('⚠️ Error al procesar el pago. Inténtalo de nuevo.');\n    btn.textContent = originalText;\n    btn.disabled = false;\n  }\n}\n\n</script>
+  });
+});
+
+// ══ STRIPE CHECKOUT ══
+async function handleCheckout() {
+  if (!cart.length) {
+    showToast('⚠️ Tu carrito está vacío');
+    return;
+  }
+
+  const btn = document.querySelector('.checkout-btn');
+  const originalText = btn.textContent;
+  btn.textContent = 'Procesando...';
+  btn.disabled = true;
+
+  try {
+    // Get base URL from current page
+    const baseUrl = window.location.origin;
+
+    // Build items with full product URLs for Stripe images
+    const items = cart.map(item => ({
+      id: item.id,
+      name: item.name,
+      type: item.type,
+      price: item.price,
+      qty: item.qty,
+      image: `${baseUrl}/assets/catalog/${item.file}`
+    }));
+
+    // Call Vercel Function to create Stripe session
+    const response = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: items,
+        locale: LANG || 'es'
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Error al crear la sesión de pago');
+    }
+
+    // Redirect to Stripe Checkout
+    window.location.href = data.url;
+
+  } catch (error) {
+    console.error('Checkout error:', error);
+    showToast('⚠️ Error al procesar el pago. Inténtalo de nuevo.');
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}\n\n</script>
 
 <!-- PRODUCT MODAL -->
 <div class="product-modal" id="productModal">
