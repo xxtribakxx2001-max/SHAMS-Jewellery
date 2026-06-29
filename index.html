@@ -1098,6 +1098,9 @@ function openProductModal(productId) {
   
   const modal = document.getElementById('productModal');
   
+  // Store product ID for cart button
+  modal.dataset.currentProductId = productId;
+  
   // Update image
   document.getElementById('modalProductImage').src = `assets/catalog/${product.file}`;
   document.getElementById('modalProductImage').alt = product.name;
@@ -1148,6 +1151,15 @@ function contactWhatsApp() {
   const productName = document.getElementById('modalName').textContent;
   const message = `Hola, estoy interesado/a en ${productName}`;
   window.open(`https://wa.me/34XXXXXXXXX?text=${encodeURIComponent(message)}`, '_blank');
+}
+
+function addToCartFromModal() {
+  const modalOverlay = document.getElementById('productModal');
+  const productId = parseInt(modalOverlay.dataset.currentProductId);
+  if (productId) {
+    addToCart(productId);
+    closeProductModal();
+  }
 }
 
 // Close modal on ESC
@@ -1424,9 +1436,9 @@ async function handleCheckout() {
         cada detalle refleja la artesanía mediterránea y el lujo accesible.
       </p>
       
-      <button class="product-cta-modal" onclick="contactWhatsApp()">
-        <span data-i18n="modal.cta">CONSULTAR POR WHATSAPP</span>
-        <span>→</span>
+      <button class="product-cta-modal" onclick="addToCartFromModal()">
+        <span data-i18n="modal.cta">AÑADIR AL CARRITO</span>
+        <span>✦</span>
       </button>
     </div>
   </div>
