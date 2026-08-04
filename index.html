@@ -133,6 +133,7 @@
     .ticker-item { font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); padding: 0 2.5rem; white-space: nowrap; }
     .ticker-item .dot { color: var(--gold-light); margin: 0 .5rem; }
     @keyframes ticker-scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    @keyframes pulseGold { 0%,100%{opacity:1} 50%{opacity:.55} }
 
     /* ══ HERO ══ */
     .hero { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
@@ -960,16 +961,16 @@ const products = [
   { id: 1,  file: "004_edited.jpg",                    type: "Pulseras",             name: "Maha — Ojos del Desierto",       price: 11.99, stock: 1 },
 
   { id: 3,  file: "006_edited.jpg",                    type: "Brazaletes",           name: "Dina — Recompensa Celestial",    price: 18.99, stock: 1 },
-  { id: 4,  file: "012_edited.jpg",                    type: "Juego de 3",           name: "Amal — Esperanza Brillante",     price: 34.99 },
+  { id: 4,  file: "012_edited.jpg",                    type: "Juego de 3",           name: "Amal — Esperanza Brillante",     price: 34.99, stock: 2 },
   { id: 5,  file: "015_edited.jpg",                    type: "Juego de 3",           name: "Shams — Luz del Sol",            price: 34.99 },
-  { id: 6,  file: "016_edited.jpg",                    type: "Juego de 4",           name: "Hadeel — Susurro de Palomas",    price: 39.99 },
+  { id: 6,  file: "016_edited.jpg",                    type: "Juego de 4",           name: "Hadeel — Susurro de Palomas",    price: 39.99, stock: 1 },
 
-  { id: 8,  file: "020_edited.jpg",                    type: "Juego de 4",           name: "Rasha — Gacela del Desierto",    price: 39.99 },
+  { id: 8,  file: "020_edited.jpg",                    type: "Juego de 4",           name: "Rasha — Gacela del Desierto",    price: 39.99, stock: 1 },
   { id: 9,  file: "021_edited.jpg",                    type: "Brazaletes",           name: "Ruba — Cima del Lujo",           price: 18.99, stock: 2 },
   { id: 10, file: "024_edited.jpg",                    type: "Brazaletes",           name: "Wafa — Fidelidad Brillante",     price: 18.99, stock: 1 },
   { id: 11, file: "025_edited.jpg",                    type: "Pulseras",             name: "Abeer — Aroma de Oriente",       price: 11.99, stock: 1 },
   { id: 12, file: "028_edited.jpg",                    type: "Pulseras",             name: "Farah — Alegría Sin Límites",    price: 11.99, stock: 1 },
-  { id: 14, file: "030_edited.jpg",                    type: "Pendientes de Perla",  name: "Leila — Perla del Nilo",         price: 14.99 },
+  { id: 14, file: "030_edited.jpg",                    type: "Pendientes de Perla",  name: "Leila — Perla del Nilo",         price: 14.99, stock: 3 },
   { id: 15, file: "033_edited.jpg",                    type: "Colgantes",            name: "Layan — Ternura de Oro",         price: 17.99, stock: 1 },
   { id: 16, file: "034_edited.jpg",                    type: "Brazaletes",           name: "Haneen — Nostalgia Dorada",      price: 18.99, stock: 1 },
   { id: 18, file: "039_edited.jpg",                    type: "Brazaletes",           name: "Wisam — Medalla de Honor",       price: 18.99, stock: 1 },
@@ -978,19 +979,19 @@ const products = [
   { id: 21, file: "043_edited.jpg",                    type: "Pulseras",             name: "Faten — Fascinación Pura",       price: 11.99, stock: 1 },
 
   { id: 26, file: "052_edited.jpg",                    type: "Brazaletes",           name: "Nawal — Noble del Desierto",     price: 18.99, stock: 1 },
-  { id: 28, file: "054_edited.jpg",                    type: "Pendientes de Perla",  name: "Dalia — Flor del Nilo",          price: 14.99 },
+  { id: 28, file: "054_edited.jpg",                    type: "Pendientes de Perla",  name: "Dalia — Flor del Nilo",          price: 14.99, stock: 3 },
   { id: 30, file: "058_edited.jpg",                    type: "Brazaletes",           name: "Hala — Halo de Luna",            price: 18.99, stock: 1 },
   { id: 31, file: "060_edited.jpg",                    type: "Brazaletes",           name: "Lobna — Amor Dulce",             price: 18.99, stock: 1 },
-  { id: 33, file: "065_edited.jpg",                    type: "Brazaletes",           name: "Mira — Visión de Lujo",          price: 18.99 },
+  { id: 33, file: "065_edited.jpg",                    type: "Brazaletes",           name: "Mira — Visión de Lujo",          price: 18.99, stock: 1 },
   { id: 35, file: "067_edited.jpg",                    type: "Brazaletes",           name: "Salma — Paz Dorada",             price: 18.99, stock: 2 },
   { id: 36, file: "069_edited.jpg",                    type: "Brazaletes",           name: "Rawda — Jardín Eterno",          price: 18.99, stock: 1 },
   { id: 39, file: "076_edited.jpg",                    type: "Brazaletes",           name: "Tasnim — Fuente del Paraíso",    price: 18.99, stock: 1 },
-  { id: 40, file: "img_084416abdaf7_edited.jpg",       type: "Anillos",              name: "Amina — Luz Fiel",               price: 14.99 },
+  { id: 40, file: "img_084416abdaf7_edited.jpg",       type: "Anillos",              name: "Amina — Luz Fiel",               price: 14.99, stock: 2 },
 
   { id: 42, file: "img_0fa024070613_edited.jpg",       type: "Brazaletes",           name: "Iman — Fe Dorada",               price: 14.99, stock: 1 },
   { id: 44, file: "img_2ecfd7da8b14_edited.jpg",       type: "Pendientes",           name: "Zahra — La Flor de Oro",         price: 12.99, stock: 4 },
   { id: 45, file: "img_309cc0378007_edited.jpg",       type: "Anillos",              name: "Amani — Sueños Dorados",         price: 14.99, stock: 1 },
-  { id: 46, file: "img_3ae99d3a7487_edited.jpg",       type: "Colgantes",            name: "Widad — Amor Puro",              price: 17.99 },
+  { id: 46, file: "img_3ae99d3a7487_edited.jpg",       type: "Colgantes",            name: "Widad — Amor Puro",              price: 17.99, stock: 1 },
 
   { id: 48, file: "img_40752e63e087_edited.jpg",       type: "Pendientes",           name: "Amira — Princesa del Este",      price: 12.99, stock: 5 },
   { id: 49, file: "img_41f7148f22de_edited.jpg",       type: "Pendientes",           name: "Aya — Maravilla Dorada",         price: 12.99, stock: 3 },
@@ -1000,26 +1001,26 @@ const products = [
   { id: 55, file: "img_6b3a23900698_edited.jpg",       type: "Anillos",              name: "Taim — Enamorado del Oro",       price: 14.99, stock: 2 },
   { id: 56, file: "img_717767762e9c_edited.jpg",       type: "Pendientes",           name: "Hiba — Don Celestial",           price: 12.99, stock: 3 },
 
-  { id: 571, file: "img_28e61d5e8feb_edited.jpg",      type: "Pendientes",           name: "Naeema — Aretes Gota",           price: 12.99 },
-  { id: 572, file: "img_07ca2094b23d_edited.jpg",      type: "Brazaletes",           name: "Layla — Noche de Estrellas",     price: 18.99 },
+  { id: 571, file: "img_28e61d5e8feb_edited.jpg",      type: "Pendientes",           name: "Naeema — Aretes Gota",           price: 12.99, stock: 2 },
+  { id: 572, file: "img_07ca2094b23d_edited.jpg",      type: "Brazaletes",           name: "Layla — Noche de Estrellas",     price: 18.99, stock: 1 },
   { id: 573, file: "img_aa98fae3ac48_edited.jpg",      type: "Pendientes",           name: "Malak — Ángel de Luz",           price: 12.99, stock: 4 },
   { id: 574, file: "img_f148ed841914_edited.jpg",      type: "Pendientes",           name: "Noor — Luz Divina",              price: 12.99, stock: 2 },
   { id: 575, file: "img_1c89cdaeb996_edited.jpg",      type: "Pendientes",           name: "Reem — Gacela Brillante",        price: 12.99, stock: 1 },
-  { id: 58, file: "img_808234da84e1_edited.jpg",       type: "Colgantes",            name: "Aziza — La Más Querida",         price: 17.99 },
+  { id: 58, file: "img_808234da84e1_edited.jpg",       type: "Colgantes",            name: "Aziza — La Más Querida",         price: 17.99, stock: 1 },
   { id: 60, file: "img_81f2c26868bc_edited.jpg",       type: "Pendientes",           name: "Rawan — Suavidad del Alma",      price: 12.99, stock: 4 },
   { id: 61, file: "img_8f96f5d42682_edited.jpg",       type: "Brazaletes",           name: "Mais — Caminar con Orgullo",     price: 18.99, stock: 2 },
 
   { id: 63, file: "img_9670d9bf0dfe_edited.jpg",       type: "Anillos",              name: "Marwa — Colina Sagrada",         price: 14.99, stock: 2 },
-  { id: 64, file: "img_c2918842d405_edited.jpg",       type: "Colgantes",            name: "Sabah — Luz del Alba",           price: 17.99 },
+  { id: 64, file: "img_c2918842d405_edited.jpg",       type: "Colgantes",            name: "Sabah — Luz del Alba",           price: 17.99, stock: 1 },
   { id: 65, file: "img_a319a76a60d0_edited.jpg",       type: "Anillos",              name: "Afnan — Fragancia Eterna",       price: 14.99, stock: 1 },
   { id: 66, file: "img_a6bc79af3947_edited.jpg",       type: "Pendientes",           name: "Shahed — Testigo del Amor",      price: 12.99, stock: 2 },
   { id: 67, file: "img_abde2ebd8eeb_edited.jpg",       type: "Anillos",              name: "Hana — Felicidad Eterna",        price: 14.99, stock: 1 },
   { id: 68, file: "img_ac12f5a007d2_edited.jpg",       type: "Anillos",              name: "Nadia — Esperanza de Rocío",     price: 14.99, stock: 1 },
-  { id: 69, file: "img_adb813a15627_edited.jpg",       type: "Colgantes",            name: "Aseel — Miel del Amanecer",      price: 17.99 },
+  { id: 69, file: "img_adb813a15627_edited.jpg",       type: "Colgantes",            name: "Aseel — Miel del Amanecer",      price: 17.99, stock: 1 },
   { id: 72, file: "img_db9f41eb2b0d_edited.jpg",       type: "Pendientes",           name: "Nour — Luz Brillante",           price: 12.99, stock: 2 },
   { id: 73, file: "img_eea4857b4ddb_edited.jpg",       type: "Brazaletes",           name: "Zeinab — Adorno del Alma",       price: 18.99, stock: 1 },
-  { id: 74, file: "img_1428ef4a4971_edited.jpg",       type: "Colgantes",            name: "Rima — Poesía de Oro",           price: 17.99 },
-  { id: 87, file: "img_b810a60d59c1_edited.jpg",       type: "Colgantes",            name: "Bahira — Brillo de Nácar",       price: 17.99 },
+  { id: 74, file: "img_1428ef4a4971_edited.jpg",       type: "Colgantes",            name: "Rima — Poesía de Oro",           price: 17.99, stock: 1 },
+  { id: 87, file: "img_b810a60d59c1_edited.jpg",       type: "Colgantes",            name: "Bahira — Brillo de Nácar",       price: 17.99, stock: 1 },
   { id: 75, file: "080_edited.jpg",                    type: "Juego de 3",           name: "Nura — Luz del Horizonte",       price: 34.99 },
   { id: 76, file: "081_edited.jpg",                    type: "Juego de 3",           name: "Bushra — Buena Nueva de Oro",    price: 34.99 },
   { id: 77, file: "082_edited.jpg",                    type: "Juego de 3",           name: "Siwar — Tesoro de Oriente",      price: 34.99 },
@@ -1072,7 +1073,7 @@ function renderCatalog(lang) {
           <div class="product-type">${typeMap[p.type]||p.type}</div>
           <div class="product-name">${p.name}</div>
           <div class="product-price">${p.price.toFixed(2).replace('.',',')}€</div>
-          ${p.stock !== undefined ? `<div class="product-stock" style="font-size: 0.75rem; color: ${p.stock > 0 ? 'var(--gold)' : '#999'}; margin-top: 0.5rem;">${p.stock > 0 ? `✓ Stock: ${p.stock}` : '✗ Agotado'}</div>` : ''}
+          ${p.stock === 0 ? `<div class="product-stock stock-out" style="font-size: 0.75rem; color: #999; margin-top: 0.5rem; font-weight: 600; letter-spacing: 0.05em;">Agotado</div>` : p.stock === 1 ? `<div class="product-stock stock-last" style="font-size: 0.75rem; color: var(--gold); margin-top: 0.5rem; font-weight: 600; letter-spacing: 0.05em; animation: pulseGold 2s ease-in-out infinite;">✦ Últimas unidades</div>` : ''}
         </div>
       </div>`).join('');
     sections.innerHTML += `
@@ -1117,18 +1118,17 @@ function openProductModal(productId) {
   // Update category
   document.getElementById('modalCategory').textContent = product.type;
   
-  // Update stock
+  // Update stock (badges: nunca mostrar número exacto)
   const stockItem = document.getElementById('modalStockItem');
   const stockSpan = document.getElementById('modalStock');
-  if (product.stock !== undefined) {
+  if (product.stock === 0) {
     stockItem.style.display = 'list-item';
-    if (product.stock > 0) {
-      stockSpan.textContent = `${product.stock} ${product.stock === 1 ? 'unidad' : 'unidades'}`;
-      stockSpan.style.color = 'var(--gold)';
-    } else {
-      stockSpan.textContent = 'Agotado';
-      stockSpan.style.color = '#999';
-    }
+    stockSpan.textContent = 'Agotado';
+    stockSpan.style.color = '#999';
+  } else if (product.stock === 1) {
+    stockItem.style.display = 'list-item';
+    stockSpan.textContent = '✦ Últimas unidades';
+    stockSpan.style.color = 'var(--gold)';
   } else {
     stockItem.style.display = 'none';
   }
@@ -1195,8 +1195,18 @@ document.addEventListener('click', (e) => {
 
 function addToCart(id) {
   const product = products.find(p => p.id === id);
+  if (product.stock === 0) {
+    showToast('Agotado — no disponible');
+    return;
+  }
   const existing = cart.find(c => c.id === id);
-  if (existing) existing.qty += 1;
+  if (existing) {
+    if (product.stock !== undefined && existing.qty >= product.stock) {
+      showToast('No hay más unidades disponibles');
+      return;
+    }
+    existing.qty += 1;
+  }
   else cart.push({ ...product, qty: 1 });
   updateCartUI();
   showToast('✦ ' + product.name.split('—')[0].trim() + ' añadida');
