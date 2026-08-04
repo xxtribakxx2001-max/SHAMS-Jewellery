@@ -956,6 +956,7 @@ const slideCaptions = {
 };
 
 // ══ CATALOG DATA ══
+const ADMIN_STOCK_VIEW = new URLSearchParams(location.search).get('stock') === 'simo';
 const products = [
 
   { id: 1,  file: "004_edited.jpg",                    type: "Pulseras",             name: "Maha — Ojos del Desierto",       price: 11.99, stock: 1 },
@@ -1073,7 +1074,7 @@ function renderCatalog(lang) {
           <div class="product-type">${typeMap[p.type]||p.type}</div>
           <div class="product-name">${p.name}</div>
           <div class="product-price">${p.price.toFixed(2).replace('.',',')}€</div>
-          ${p.stock === 0 ? `<div class="product-stock stock-out" style="font-size: 0.75rem; color: #999; margin-top: 0.5rem; font-weight: 600; letter-spacing: 0.05em;">Agotado</div>` : p.stock === 1 ? `<div class="product-stock stock-last" style="font-size: 0.75rem; color: var(--gold); margin-top: 0.5rem; font-weight: 600; letter-spacing: 0.05em; animation: pulseGold 2s ease-in-out infinite;">✦ Últimas unidades</div>` : ''}
+          ${ADMIN_STOCK_VIEW ? `<div class="product-stock" style="font-size: 0.75rem; color: ${p.stock === 0 ? '#e05555' : 'var(--gold-light)'}; margin-top: 0.5rem; font-weight: 700;">📦 Stock: ${p.stock !== undefined ? p.stock : '—'}</div>` : p.stock === 0 ? `<div class="product-stock stock-out" style="font-size: 0.75rem; color: #999; margin-top: 0.5rem; font-weight: 600; letter-spacing: 0.05em;">Agotado</div>` : p.stock === 1 ? `<div class="product-stock stock-last" style="font-size: 0.75rem; color: var(--gold); margin-top: 0.5rem; font-weight: 600; letter-spacing: 0.05em; animation: pulseGold 2s ease-in-out infinite;">✦ Últimas unidades</div>` : ''}
         </div>
       </div>`).join('');
     sections.innerHTML += `
