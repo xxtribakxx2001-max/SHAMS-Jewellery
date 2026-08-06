@@ -245,6 +245,7 @@
     .product-img-wrap { position: relative; overflow: hidden; aspect-ratio: 3/4; background: #1a1a1a; }
     .product-img-wrap img { width: 100%; height: 100%; object-fit: contain; transition: transform .7s ease; }
     /* Juegos de 3: mostrar completos sin recortar */
+    .product-card[data-type="Juego de 2"] .product-img-wrap img,
     .product-card[data-type="Juego de 3"] .product-img-wrap img { object-fit: contain; }
     .product-card:hover .product-img-wrap img { transform: scale(1.08); }
     /* shimmer effect */
@@ -934,8 +935,8 @@ const catLabels = {
   en: { 'cat-anillos':'Rings', 'cat-brazaletes':'Bracelets', 'cat-pendientes':'Earrings', 'cat-perla':'Pearl Earrings', 'cat-colgantes':'Pendants', 'cat-pulseras':'Bangles', 'cat-juegos':'Sets', 'pieces':'pieces' }
 };
 const productTypeMap = {
-  es: { 'Anillos':'Anillos','Brazaletes':'Brazaletes','Pendientes':'Pendientes','Pendientes de Perla':'Pendientes de Perla','Colgantes':'Colgantes','Pulseras':'Pulseras','Juego de 3':'Juego de 3','Juego de 4':'Juego de 4' },
-  en: { 'Anillos':'Ring','Brazaletes':'Bracelet','Pendientes':'Earrings','Pendientes de Perla':'Pearl Earrings','Colgantes':'Pendant','Pulseras':'Bangle','Juego de 3':'Set of 3','Juego de 4':'Set of 4' }
+  es: { 'Anillos':'Anillos','Brazaletes':'Brazaletes','Pendientes':'Pendientes','Pendientes de Perla':'Pendientes de Perla','Colgantes':'Colgantes','Pulseras':'Pulseras','Juego de 2':'Juego de 2','Juego de 3':'Juego de 3','Juego de 4':'Juego de 4' },
+  en: { 'Anillos':'Ring','Brazaletes':'Bracelet','Pendientes':'Earrings','Pendientes de Perla':'Pearl Earrings','Colgantes':'Pendant','Pulseras':'Bangle','Juego de 2':'Set of 2','Juego de 3':'Set of 3','Juego de 4':'Set of 4' }
 };
 const filterLabels = {
   es: ['Anillos','Brazaletes','Pendientes','Pendientes de Perla','Colgantes','Pulseras','Juegos'],
@@ -962,8 +963,7 @@ const products = [
   { id: 1,  file: "004_edited.jpg",                    type: "Pulseras",             name: "Maha — Ojos del Desierto",       price: 11.99, stock: 1 },
 
   { id: 3,  file: "006_edited.jpg",                    type: "Brazaletes",           name: "Dina — Recompensa Celestial",    price: 18.99, stock: 1 },
-  { id: 4,  file: "012_edited.jpg",                    type: "Juego de 3",           name: "Amal — Esperanza Brillante",     price: 34.99, stock: 2 },
-  { id: 5,  file: "015_edited.jpg",                    type: "Juego de 3",           name: "Shams — Luz del Sol",            price: 34.99 },
+  { id: 5,  file: "015_edited.jpg",                    type: "Juego de 2",           name: "Shams — Luz del Sol",            price: 34.99, stock: 2 },
   { id: 6,  file: "016_edited.jpg",                    type: "Juego de 4",           name: "Hadeel — Susurro de Palomas",    price: 39.99, stock: 1 },
 
   { id: 8,  file: "020_edited.jpg",                    type: "Juego de 4",           name: "Rasha — Gacela del Desierto",    price: 39.99, stock: 1 },
@@ -1042,7 +1042,7 @@ const categories = [
   { id: 'cat-perla',      types: ['pendientes de perla'] },
   { id: 'cat-colgantes',  types: ['colgantes'] },
   { id: 'cat-pulseras',   types: ['pulseras','pulseras con cierre'] },
-  { id: 'cat-juegos',     types: ['juego de 3','juego de 4'] },
+  { id: 'cat-juegos',     types: ['juego de 2','juego de 3','juego de 4'] },
 ];
 
 function renderCatalog(lang) {
