@@ -856,6 +856,7 @@
       <span>Total</span>
       <strong id="cartTotal">0.00€</strong>
     </div>
+    <p style="font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold-light); margin:-.8rem 0 1.2rem; text-align:center;" data-i18n="cart.shipping">✦ Envío incluido en el precio</p>
     <button class="checkout-btn" onclick="handleCheckout()">Finalizar Compra</button>
   </div>
 </div>
@@ -894,6 +895,8 @@ var T = {
     'gift.cta':'Elegir mi regalo →',
     'footer.brand':'Joyería de inspiración árabe con alma mediterránea. Cada pieza es una historia, cada diseño es un sueño. Madrid, España.',
     'footer.specs':'✦ Material: Baño de oro premium sobre aleación de alta calidad | Duración: 2+ años con cuidado adecuado',
+    'cart.shipping':'✦ Envío incluido en el precio',
+    'modal.specs.shipping':'Envío','modal.specs.shipping.value':'Incluido en el precio',
     'footer.copy':'© 2025 SHAMS — شمس. Todos los derechos reservados.',
     'footer.made':'✦ Hecho con amor en Madrid',
     'lang.btn':'EN'
@@ -924,6 +927,8 @@ var T = {
     'gift.text':'Every SHAMS jewel arrives in its black box with a golden ribbon, ready to give. Because the most special moments deserve the most beautiful of details.',
     'gift.cta':'Choose my gift →',
     'footer.brand':'Arab-inspired jewelry with a Mediterranean soul. Every piece is a story, every design is a dream. Madrid, Spain.',
+    'cart.shipping':'✦ Free shipping included',
+    'modal.specs.shipping':'Shipping','modal.specs.shipping.value':'Included in the price',
     'footer.copy':'© 2025 SHAMS — شمس. All rights reserved.',
     'footer.made':'✦ Made with love in Madrid',
     'lang.btn':'ES'
@@ -1456,6 +1461,7 @@ async function handleCheckout() {
           <li><span data-i18n="modal.specs.finish">Acabado</span>: <span data-i18n="modal.specs.finish.value">Oro brillante</span></li>
           <li><span data-i18n="modal.specs.duration">Duración</span>: <span data-i18n="modal.specs.duration.value">2+ años con cuidado adecuado</span></li>
           <li data-i18n="modal.specs.hypoallergenic">Hipoalergénico</li>
+          <li><span data-i18n="modal.specs.shipping">Envío</span>: <span data-i18n="modal.specs.shipping.value" style="color: var(--gold); font-weight: 600;">Incluido en el precio</span></li>
         </ul>
       </div>
       
