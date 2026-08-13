@@ -1361,6 +1361,7 @@ setTimeout(()=>{ const pi=document.getElementById('page-intro'); if(pi) { pi.add
 document.addEventListener('DOMContentLoaded', () => {
   // Render catalog after DOM is ready
   renderCatalog('es');
+  syncStockFromDB();
   
   document.querySelectorAll('video').forEach(video => {
     video.muted = true;
@@ -1371,6 +1372,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ══ STOCK EN VIVO (Supabase) ══
+const SUPABASE_URL = 'https://utptigydcgknicqpywtj.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0cHRpZ3lkY2drbmljcXB5d3RqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2NDIwNDAsImV4cCI6MjEwMjIxODA0MH0.eofbt1HlPDtX5nrq5eKAMFzSF-2CpDmN94YKhVSGYeE';
+
+async function syncStockFromDB() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/products?select=id,stock`, {
+      headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }
+    });
+    if (!res.ok) throw new Error(`stock fetch ${res.status}`);
+    const rows = await res.json();
+    const stockById = Object.fromEntries(rows.map(r => [r.id, r.stock]));
+    let changed = false;
+    products.forEach(p => {
+      if (stockById[p.id] !== undefined && stockById[p.id] !== p.stock) {
+        p.stock = stockById[p.id];
+        changed = true;
+      }
+    });
+    if (changed) renderCatalog(LANG);
+  } catch (err) {
+    console.error('Stock sync error (usando stock local):', err);
+  }
+}
 
 // ══ STRIPE CHECKOUT ══
 async function handleCheckout() {
