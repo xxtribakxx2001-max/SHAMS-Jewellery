@@ -40,9 +40,7 @@ export default async function handler(req, res) {
     }));
 
     // Determine URLs based on deployment
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : req.headers.origin || 'https://shamsjewellery.com';
+    const baseUrl = req.headers.origin || 'https://shams-jewellery.vercel.app';
 
     // Create Checkout Session
     const session = await stripe.checkout.sessions.create({
