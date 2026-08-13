@@ -66,18 +66,25 @@ async function sendOrderEmails({ orderId, customerName, customerEmail, shippingA
       await transport.sendMail({
         from,
         to: customerEmail,
-        subject: 'Confirmación de tu pedido — SHAMS Jewels ✦',
-        html: wrap('¡Gracias por tu compra!', `
-          <p>Hola ${customerName || ''},</p>
-          <p><strong>Gracias por tu compra y por confiar en SHAMS.</strong> Hemos recibido tu pedido y ya lo estamos preparando. <strong style="color:${GOLD};">En las próximas horas te enviaremos el código de seguimiento de tu envío</strong> a este mismo correo. Dirección de entrega:</p>
-          <p style="color:#ccc;">${formatAddress(shippingAddress)}</p>
+        subject: 'Su pedido SHAMS — Confirmación ✦',
+        html: wrap('Bienvenido a SHAMS', `
+          <p style="font-size:16px;">Estimado/a ${customerName || 'cliente'},</p>
+          <p style="line-height:1.7;">Es un honor darle la bienvenida a <strong style="color:${GOLD};">SHAMS</strong>. Su pedido ha sido recibido y, desde este momento, nuestro equipo lo prepara con la dedicación que merece cada una de nuestras piezas.</p>
+          <p style="line-height:1.7;">Cada joya SHAMS está inspirada en el oro del sol — creada para acompañarle en los momentos que importan. Confiamos en que la suya le haga sentir exactamente eso.</p>
+          <p style="line-height:1.7;"><strong style="color:${GOLD};">En las próximas horas recibirá el código de seguimiento de su envío</strong> en este mismo correo.</p>
+          <p style="color:#999;font-size:13px;margin-bottom:4px;">DIRECCIÓN DE ENTREGA</p>
+          <p style="color:#ccc;margin-top:0;">${formatAddress(shippingAddress)}</p>
+          <p style="color:#999;font-size:13px;margin-bottom:4px;">SU PEDIDO</p>
           ${itemsTable}
-          <div style="border:1px solid ${GOLD};padding:16px;text-align:center;margin:20px 0;">
-            <p style="margin:0 0 6px;color:#ccc;">Un regalo por confiar en nosotros ✦</p>
-            <p style="margin:0;font-size:20px;letter-spacing:3px;color:${GOLD};"><strong>SHAMS10</strong></p>
-            <p style="margin:6px 0 0;color:#999;font-size:12px;">10% de descuento en tu próxima compra</p>
+          <div style="border:1px solid ${GOLD};padding:20px;text-align:center;margin:24px 0;">
+            <p style="margin:0 0 8px;color:#ccc;font-style:italic;">Una atención exclusiva, como agradecimiento por su confianza ✦</p>
+            <p style="margin:0;font-size:22px;letter-spacing:4px;color:${GOLD};"><strong>SHAMS10</strong></p>
+            <p style="margin:8px 0 0;color:#999;font-size:12px;">10% de descuento en su próxima adquisición</p>
           </div>
-          <p style="color:#999;font-size:12px;">¿Dudas? Responde a este email.<br>shams-jewels.com</p>`),
+          <p style="line-height:1.7;">Gracias por elegirnos. Es un privilegio formar parte de su historia.</p>
+          <p style="color:${GOLD};margin-bottom:0;">Atentamente,</p>
+          <p style="margin-top:2px;">El equipo SHAMS</p>
+          <p style="color:#999;font-size:12px;border-top:1px solid #333;padding-top:12px;">¿Alguna consulta? Responda a este correo — le atenderemos personalmente.<br>shams-jewels.com · El oro del sol</p>`),
       });
       results.customer = 'sent';
     } catch (error) {
