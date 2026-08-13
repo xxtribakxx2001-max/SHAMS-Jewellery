@@ -78,8 +78,8 @@ async function sendOrderEmails({ orderId, customerName, customerEmail, shippingA
           ${itemsTable}
           <div style="border:1px solid ${GOLD};padding:20px;text-align:center;margin:24px 0;">
             <p style="margin:0 0 8px;color:#ccc;font-style:italic;">Una atención exclusiva, como agradecimiento por su confianza ✦</p>
-            <p style="margin:0;font-size:22px;letter-spacing:4px;color:${GOLD};"><strong>SHAMS10</strong></p>
-            <p style="margin:8px 0 0;color:#999;font-size:12px;">10% de descuento en su próxima adquisición</p>
+            <p style="margin:0;font-size:22px;letter-spacing:4px;color:${GOLD};"><strong>SHAMS15</strong></p>
+            <p style="margin:8px 0 0;color:#999;font-size:12px;">15% de descuento en su próxima adquisición</p>
           </div>
           <p style="line-height:1.7;">Gracias por elegirnos. Es un privilegio formar parte de su historia.</p>
           <p style="color:${GOLD};margin-bottom:0;">Atentamente,</p>
