@@ -69,9 +69,14 @@ async function sendOrderEmails({ orderId, customerName, customerEmail, shippingA
         subject: 'Confirmación de tu pedido — SHAMS Jewels ✦',
         html: wrap('¡Gracias por tu compra!', `
           <p>Hola ${customerName || ''},</p>
-          <p>Hemos recibido tu pedido y ya lo estamos preparando. <strong style="color:${GOLD};">En las próximas horas te enviaremos el código de seguimiento de tu envío</strong> a este mismo correo. Dirección de entrega:</p>
+          <p><strong>Gracias por tu compra y por confiar en SHAMS.</strong> Hemos recibido tu pedido y ya lo estamos preparando. <strong style="color:${GOLD};">En las próximas horas te enviaremos el código de seguimiento de tu envío</strong> a este mismo correo. Dirección de entrega:</p>
           <p style="color:#ccc;">${formatAddress(shippingAddress)}</p>
           ${itemsTable}
+          <div style="border:1px solid ${GOLD};padding:16px;text-align:center;margin:20px 0;">
+            <p style="margin:0 0 6px;color:#ccc;">Un regalo por confiar en nosotros ✦</p>
+            <p style="margin:0;font-size:20px;letter-spacing:3px;color:${GOLD};"><strong>SHAMS10</strong></p>
+            <p style="margin:6px 0 0;color:#999;font-size:12px;">10% de descuento en tu próxima compra</p>
+          </div>
           <p style="color:#999;font-size:12px;">¿Dudas? Responde a este email.<br>shams-jewels.com</p>`),
       });
       results.customer = 'sent';
