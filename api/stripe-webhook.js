@@ -77,6 +77,26 @@ export default async function handler(req, res) {
     });
 
     console.log(`Order recorded: ${session.id}, ${items.length} item(s)`);
+
+    // Emails: aviso al dueño + confirmación al cliente (no rompe el pedido si falla)
+    try {
+      const { sendOrderEmails } = require('./_order-emails.js');
+      const emailResults = await sendOrderEmails({
+        orderId: session.id,
+        customerName: session.customer_details?.name || null,
+        customerEmail: session.customer_details?.email || null,
+        shippingAddress:
+          session.collected_information?.shipping_details ||
+          session.customer_details?.address ||
+          null,
+        items,
+        total: (session.amount_total || 0) / 100,
+      });
+      console.log('Order emails:', JSON.stringify(emailResults));
+    } catch (error) {
+      console.error('Order email error (order already saved):', error.message);
+    }
+
     return res.status(200).json({ received: true });
   } catch (error) {
     console.error('Order processing error:', error.message);
